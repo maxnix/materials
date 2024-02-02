@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_bootcamp_activities",
+  "info": {
+    "displayName": "Activity",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}
