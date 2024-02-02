@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bootcamps",
+  "info": {
+    "singularName": "bootcamp",
+    "pluralName": "bootcamps",
+    "displayName": "Bootcamp"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Iscrizioni": {
+      "type": "integer",
+      "default": 0
+    },
+    "Cover": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "Starts": {
+      "type": "datetime"
+    },
+    "ends": {
+      "type": "datetime"
+    },
+    "isRemote": {
+      "type": "boolean"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Lessons": {
+      "displayName": "Activity",
+      "type": "component",
+      "repeatable": true,
+      "component": "bootcamp.activity"
+    },
+    "course": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course.course",
+      "inversedBy": "bootcamps"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "universapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd frontend && pnpm dev",
+    "server": "cd backend && yarn develop",
+    "dev": "concurrently \"cd backend && yarn develop\" \"npx wait-on http://localhost:1337 && cd frontend && pnpm dev\"",
+    "copyTypes": "node copyTypes.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
+  }
+}
