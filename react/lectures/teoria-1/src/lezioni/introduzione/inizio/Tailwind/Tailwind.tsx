@@ -1,4 +1,4 @@
-import style from "./JsxRules.module.css"
+// import style from "./JsxRules.module.css"
 
 /*
     JSX & Rules 
@@ -25,7 +25,7 @@ const Article = () => (
     style={{
       marginBottom: `1rem`,
     }}
-    className={style.card}
+    className={`none`}
   >
     <img src="https://picsum.photos/200" alt="random" />
     <TextContent />
