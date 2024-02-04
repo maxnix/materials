@@ -1,4 +1,4 @@
-import { Config } from "tailwindcss"
+import { Config } from "tailwindcss/types"
 
 const config: Config = {
   content: [`./index.html`, `./src/**/*.{js,ts,jsx,tsx}`],
