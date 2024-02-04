@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line no-unused-vars
-// import { PrimoComponente } from "./lezioni/introduzione/inizio"
-import { Events } from "./lezioni/introduzione/risultato"
+import { PrimoComponente } from "./lezioni/introduzione/inizio"
 
-const App = () => <Events yo="4" />
+const App = () => <PrimoComponente />
 
 export default App
