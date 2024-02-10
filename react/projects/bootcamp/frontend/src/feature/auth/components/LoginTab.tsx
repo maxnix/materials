@@ -108,7 +108,7 @@ export const LoginTabs = () => {
         duration: 5000,
         variant: `success`,
       })
-      navigate(`/`)
+      navigate(`/app/dashboard`)
     }
   }, [data, isLoading, dispatch, navigate, toast])
 
