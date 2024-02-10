@@ -1,44 +1,46 @@
-import { RouteObject } from "react-router-dom";
-import { HomePage } from "./HomePage";
-import { Auth } from "./auth/Auth";
-import { LoginRoute } from "./auth/Login";
-import { RegisterRoute } from "./auth/Register";
-import { ForgotRoute } from "./auth/Forgot";
-import { ResetRoute } from "./auth/Reset";
-import { EmailVericationRoute } from "./auth/VerifyEmail";
+import { RouteObject } from "react-router-dom"
+import { HomePage } from "./HomePage"
+import { Auth } from "./auth/Auth"
+import { LoginRoute } from "./auth/Login"
+import { RegisterRoute } from "./auth/Register"
+import { ForgotRoute } from "./auth/Forgot"
+import { ResetRoute } from "./auth/Reset"
+import { EmailVericationRoute } from "./auth/VerifyEmail"
+import { dashboardRoutes } from "./dashboard"
 
-export const routes: RouteObject[] = [
+export const routes = (isLoggedIn: boolean): RouteObject[] => [
   {
-    path: "/",
+    path: `/`,
     element: <HomePage />,
     children: [
       {
-        path: "auth/",
+        path: `auth/`,
         element: <Auth />,
         children: [
           {
-            path: "login",
+            path: `login`,
             element: <LoginRoute />,
             index: true,
           },
           {
-            path: "register",
+            path: `register`,
             element: <RegisterRoute />,
           },
         ],
       },
       {
-        path: "auth/forgotpassword",
+        path: `auth/forgotpassword`,
         element: <ForgotRoute />,
       },
     ],
   },
   {
-    path: "auth/resetpassword",
+    path: `auth/resetpassword`,
     element: <ResetRoute />,
   },
   {
-    path: "auth/verify-email",
+    path: `auth/verify-email`,
     element: <EmailVericationRoute />,
   },
-];
+  ...dashboardRoutes(isLoggedIn),
+]

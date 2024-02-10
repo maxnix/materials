@@ -1,5 +1,3 @@
-import { LoginTabs } from "@/feature/auth/components/LoginTab";
+import { LoginTabs } from "@/feature/auth/components/LoginTab"
 
-export const LoginRoute = () => {
-  return <LoginTabs />;
-};
+export const LoginRoute = () => <LoginTabs />

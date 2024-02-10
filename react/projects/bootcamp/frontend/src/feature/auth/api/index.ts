@@ -1,5 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import {
   AdminLoginCredentials,
   Credentials,
@@ -8,68 +7,68 @@ import {
   ResetPasswordRequest,
   ResetPasswordResponse,
   SignupResponse,
-} from "./types";
-import { RootState } from "@/service/redux/store";
+} from "./types"
+import { RootState } from "@/service/redux/store"
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:1337/api",
+  baseUrl: `http://localhost:1337/api`,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": `application/json`,
   },
-  credentials: "include",
+  credentials: `include`,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const { token } = (getState() as RootState).auth
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set(`Authorization`, `Bearer ${token}`)
     }
-    return headers;
+    return headers
   },
-});
+})
 
-const publicRegistrationUrl = "/auth/local";
-const adminRegistrationUrl = "/admin/auth/local";
-const publicBaseUrl = "/auth";
+const publicRegistrationUrl = `/auth/local`
+const adminRegistrationUrl = `/admin/auth/local`
+const publicBaseUrl = `/auth`
 
 export const authApi = createApi({
-  reducerPath: "authApi",
+  reducerPath: `authApi`,
   baseQuery,
-  tagTypes: ["Auth"],
+  tagTypes: [`Auth`],
   endpoints: (builder) => ({
     login: builder.mutation<SignupResponse, LoginCredentials>({
       query: (credentials) => ({
         url: `${publicRegistrationUrl}`,
-        method: "POST",
+        method: `POST`,
         body: credentials,
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: [`Auth`],
     }),
     adminLogin: builder.mutation<SignupResponse, AdminLoginCredentials>({
       query: (credentials) => ({
         url: `${adminRegistrationUrl}/login`,
-        method: "POST",
+        method: `POST`,
         body: credentials,
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: [`Auth`],
     }),
     register: builder.mutation<SignupResponse, Credentials>({
       query: (credentials) => ({
         url: `${publicRegistrationUrl}/register`,
-        method: "POST",
+        method: `POST`,
         body: credentials,
       }),
-      invalidatesTags: ["Auth"],
+      invalidatesTags: [`Auth`],
     }),
     forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
       query: (body) => ({
         url: `${publicBaseUrl}/forgot-password`,
-        method: "POST",
+        method: `POST`,
         body,
       }),
     }),
     resendEmailVerification: builder.mutation<void, ForgotPasswordRequest>({
       query: (body) => ({
         url: `${publicBaseUrl}/send-email-confirmation`,
-        method: "POST",
+        method: `POST`,
         body,
       }),
     }),
@@ -79,12 +78,12 @@ export const authApi = createApi({
     >({
       query: (body) => ({
         url: `${publicBaseUrl}/reset-password`,
-        method: "POST",
+        method: `POST`,
         body,
       }),
     }),
   }),
-});
+})
 
 export const {
   useLoginMutation,
@@ -93,4 +92,4 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useResendEmailVerificationMutation,
-} = authApi;
+} = authApi

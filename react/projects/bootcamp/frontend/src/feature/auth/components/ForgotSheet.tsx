@@ -1,15 +1,15 @@
+import { useNavigate } from "react-router-dom"
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback } from "react"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { useNavigate } from "react-router-dom";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+} from "@/components/ui/sheet"
 import {
   Form,
   FormButton,
@@ -18,53 +18,55 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForgotPasswordMutation } from "../api";
-import { useToast } from "@/components/ui/toast/hook/use-toast";
+} from "@/components/ui/form/form"
+import { Input } from "@/components/ui/input"
+import { useForgotPasswordMutation } from "../api"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
 
 const formSchema = z.object({
   email: z.string().email(),
-});
+})
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 const defaultValues = {
-  email: "",
-};
+  email: ``,
+}
 
 export const ForgotSheet = () => {
-  const [forgotPassword] = useForgotPasswordMutation();
-  const { toast } = useToast();
-  const navigate = useNavigate();
+  const [forgotPassword] = useForgotPasswordMutation()
+  const { toast } = useToast()
+  const navigate = useNavigate()
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
-    mode: "onSubmit",
-  });
+    mode: `onSubmit`,
+  })
 
   const onSubmit = useCallback(
     (data: FormValues) => {
       forgotPassword(data)
         .unwrap()
         .then(() => {
-          form.reset();
+          form.reset()
           toast({
-            title: "Password Reset Email Sent",
-            description:
-              "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.",
-            variant: "info",
-          });
+            title: `Password Reset Email Sent`,
+            description: `Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.`,
+            variant: `info`,
+          })
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          toast({
+            title: `Something went wrong!`,
+            variant: `destructive`,
+          })
         })
         .finally(() => {
-          form.reset();
-        });
+          form.reset()
+        })
     },
     [form, forgotPassword, toast]
-  );
+  )
 
   return (
     <Sheet
@@ -72,7 +74,7 @@ export const ForgotSheet = () => {
       defaultOpen
       onOpenChange={(open) => {
         if (open === false) {
-          navigate(-1);
+          navigate(-1)
         }
       }}
     >
@@ -114,5 +116,5 @@ export const ForgotSheet = () => {
         </div>
       </SheetContent>
     </Sheet>
-  );
-};
+  )
+}

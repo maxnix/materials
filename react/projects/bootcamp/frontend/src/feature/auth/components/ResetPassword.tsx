@@ -1,3 +1,9 @@
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback } from "react"
+import { Link, useSearchParams } from "react-router-dom"
+import { PasswordInput } from "@/components/ui/input"
 import {
   Form,
   FormButton,
@@ -6,20 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { PasswordInput } from "@/components/ui/input";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { useResetPasswordMutation } from "../api";
-import { useToast } from "@/components/ui/toast/hook/use-toast";
-import { useAppDispatch } from "@/service/redux/hooks";
-import { setToken, setUsername } from "../slice";
-import { UnstyledLayout } from "@/feature/layout/UnstyledLayout";
-import { SignupErrorResponse } from "../api/types";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form/form"
+import { useResetPasswordMutation } from "../api"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
+import { useAppDispatch } from "@/service/redux/hooks"
+import { setToken, setUsername } from "../slice"
+import { UnstyledLayout } from "@/feature/layout/UnstyledLayout"
+import { SignupErrorResponse } from "../api/types"
+import { Button } from "@/components/ui/button/button"
 
 const formSchema = z
   .object({
@@ -27,44 +27,44 @@ const formSchema = z
       .string()
       .min(12)
       .max(100)
-      .refine((password) => {
-        return (
+      .refine(
+        (password) =>
           /[a-z]/.test(password) &&
           /[A-Z]/.test(password) &&
           /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/.test(
             password
-          )
-        );
-      }, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
+          ),
+        `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character`
+      ),
     confirmPassword: z.string().min(12).max(100),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+    message: `Passwords do not match`,
+    path: [`confirmPassword`],
+  })
 
 const formDefaultValues = {
-  password: "",
-  confirmPassword: "",
-};
+  password: ``,
+  confirmPassword: ``,
+}
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 export const ResetPassword = () => {
-  const [resetPassword, { isSuccess }] = useResetPasswordMutation();
-  const dispatch = useAppDispatch();
-  const { toast } = useToast();
-  const [getParams] = useSearchParams();
-  const code = getParams.get("code");
+  const [resetPassword, { isSuccess }] = useResetPasswordMutation()
+  const dispatch = useAppDispatch()
+  const { toast } = useToast()
+  const [getParams] = useSearchParams()
+  const code = getParams.get(`code`)
   const form = useForm<FormValues>({
     defaultValues: formDefaultValues,
     resolver: zodResolver(formSchema),
-    mode: "onTouched",
-  });
+    mode: `onTouched`,
+  })
 
   const onSubmit = useCallback(
     (data: FormValues) => {
-      if (!code) return;
+      if (!code) return
       resetPassword({
         code,
         password: data.password,
@@ -73,25 +73,25 @@ export const ResetPassword = () => {
         .unwrap()
         .then((res) => {
           if (res.jwt) {
-            dispatch(setToken(res.jwt));
+            dispatch(setToken(res.jwt))
           }
           if (res.user) {
-            dispatch(setUsername(res.user.id));
+            dispatch(setUsername(res.user.id))
           }
         })
         .catch((err: SignupErrorResponse) => {
           toast({
-            title: "Something went wrong",
-            variant: "destructive",
+            title: `Something went wrong`,
+            variant: `destructive`,
             description: err.data.error.message,
-          });
+          })
         })
         .finally(() => {
-          form.reset();
-        });
+          form.reset()
+        })
     },
     [code, resetPassword, toast, dispatch, form]
-  );
+  )
   if (!isSuccess) {
     return (
       <div className="flex justify-center h-screen items-center">
@@ -109,7 +109,7 @@ export const ResetPassword = () => {
           </Link>
         </div>
       </div>
-    );
+    )
   }
   return (
     <UnstyledLayout>
@@ -161,5 +161,5 @@ export const ResetPassword = () => {
         </div>
       </div>
     </UnstyledLayout>
-  );
-};
+  )
+}

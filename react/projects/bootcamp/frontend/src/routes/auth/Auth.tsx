@@ -1,5 +1,3 @@
-import { AuthSheet } from "@/feature/auth/components/AuthSheet";
+import { AuthSheet } from "@/feature/auth/components/AuthSheet"
 
-export const Auth = () => {
-  return <AuthSheet />;
-};
+export const Auth = () => <AuthSheet />

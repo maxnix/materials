@@ -1,5 +1,3 @@
-import { RegisterTab } from "@/feature/auth/components/RegisterTabs";
+import { RegisterTab } from "@/feature/auth/components/RegisterTabs"
 
-export const RegisterRoute = () => {
-  return <RegisterTab />;
-};
+export const RegisterRoute = () => <RegisterTab />

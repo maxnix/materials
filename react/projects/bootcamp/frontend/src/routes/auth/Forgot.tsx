@@ -1,5 +1,3 @@
-import { ForgotSheet } from "@/feature/auth/components/ForgotSheet";
+import { ForgotSheet } from "@/feature/auth/components/ForgotSheet"
 
-export const ForgotRoute = () => {
-  return <ForgotSheet />;
-};
+export const ForgotRoute = () => <ForgotSheet />

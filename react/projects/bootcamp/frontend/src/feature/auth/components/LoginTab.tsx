@@ -1,15 +1,15 @@
-import { Input, PasswordInput } from "@/components/ui/input";
+import { Link, useNavigate } from "react-router-dom"
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback, useEffect } from "react"
+import { TabsContent } from "@/components/ui/tabs"
 import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { TabsContent } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect } from "react";
+} from "@/components/ui/sheet"
+import { Input, PasswordInput } from "@/components/ui/input"
 import {
   Form,
   FormButton,
@@ -18,74 +18,73 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { useLoginMutation, useResendEmailVerificationMutation } from "../api";
-import { setToken } from "../slice";
-import { useAppDispatch } from "@/service/redux/hooks";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/toast/hook/use-toast";
-import { SignupErrorResponse } from "../api/types";
-import { ToastAction } from "@/components/ui/toast";
+} from "@/components/ui/form/form"
+import { useLoginMutation, useResendEmailVerificationMutation } from "../api"
+import { setToken } from "../slice"
+import { useAppDispatch } from "@/service/redux/hooks"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
+import { SignupErrorResponse } from "../api/types"
+import { ToastAction } from "@/components/ui/toast"
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(8, "Password Should Have at least 8 characters")
+    .min(8, `Password Should Have at least 8 characters`)
     .max(100),
-});
+})
 
 const formDefaultValues = {
-  email: "",
-  password: "",
-};
+  email: ``,
+  password: ``,
+}
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 export const LoginTabs = () => {
-  const [resendConfirm] = useResendEmailVerificationMutation();
-  const { toast } = useToast();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const [resendConfirm] = useResendEmailVerificationMutation()
+  const { toast } = useToast()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const [login, { data, isLoading }] = useLoginMutation();
+  const [login, { data, isLoading }] = useLoginMutation()
   const form = useForm<FormValues>({
     defaultValues: formDefaultValues,
     resolver: zodResolver(formSchema),
-    mode: "onTouched",
-  });
+    mode: `onTouched`,
+  })
 
   const onSubmit = useCallback(
-    async (data: FormValues) => {
+    async (values: FormValues) => {
       login({
-        identifier: data.email,
-        password: data.password,
+        identifier: values.email,
+        password: values.password,
       })
         .unwrap()
         .then(() => {
-          form.reset();
+          form.reset()
         })
         .catch(({ data: { error } }: SignupErrorResponse) => {
           const isUncorfimed =
-            error.message === "Your account email is not confirmed";
+            error.message === `Your account email is not confirmed`
           toast({
-            title: "Login Failed",
+            title: `Login Failed`,
             description: error.message,
             duration: 5000,
-            variant: isUncorfimed ? "info" : "destructive",
+            variant: isUncorfimed ? `info` : `destructive`,
             action: isUncorfimed ? (
               <ToastAction
                 onClick={() => {
-                  resendConfirm({ email: data.email })
+                  resendConfirm({ email: values.email })
                     .unwrap()
                     .then(() => {
                       toast({
-                        title: "Email Sent",
-                        description: "Email has been sent",
+                        title: `Email Sent`,
+                        description: `Email has been sent`,
                         duration: 5000,
-                        variant: "success",
-                      });
-                    });
+                        variant: `success`,
+                      })
+                    })
                 }}
                 altText="Resend"
                 className="hover:bg-slate-50 hover:text-black"
@@ -93,25 +92,25 @@ export const LoginTabs = () => {
                 Resend
               </ToastAction>
             ) : undefined,
-          });
-        });
+          })
+        })
     },
     [form, login, toast, resendConfirm]
-  );
+  )
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) return
     if (data?.jwt) {
-      dispatch(setToken(data.jwt));
+      dispatch(setToken(data.jwt))
       toast({
-        title: "Login Success",
-        description: "You have successfully logged in",
+        title: `Login Success`,
+        description: `You have successfully logged in`,
         duration: 5000,
-        variant: "destructive",
-      });
-      navigate("/");
+        variant: `success`,
+      })
+      navigate(`/`)
     }
-  }, [data, isLoading, dispatch, navigate, toast]);
+  }, [data, isLoading, dispatch, navigate, toast])
 
   return (
     <TabsContent value="login">
@@ -168,5 +167,5 @@ export const LoginTabs = () => {
         Forgot your password?
       </Link>
     </TabsContent>
-  );
-};
+  )
+}

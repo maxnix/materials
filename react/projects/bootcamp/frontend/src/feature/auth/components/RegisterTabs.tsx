@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Input, PasswordInput } from "@/components/ui/input";
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback } from "react"
+import { Button } from "@/components/ui/button/button"
+import { Input, PasswordInput } from "@/components/ui/input"
 import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
   SheetFooter,
   SheetClose,
-} from "@/components/ui/sheet";
-import { TabsContent } from "@/components/ui/tabs";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+} from "@/components/ui/sheet"
+import { TabsContent } from "@/components/ui/tabs"
 import {
   Form,
   FormButton,
@@ -20,10 +20,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { useRegisterMutation } from "../api";
-import { useToast } from "@/components/ui/toast/hook/use-toast";
-import { SignupErrorResponse } from "../api/types";
+} from "@/components/ui/form/form"
+import { useRegisterMutation } from "../api"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
+import { SignupErrorResponse } from "../api/types"
 
 const formSchema = z
   .object({
@@ -33,61 +33,59 @@ const formSchema = z
       .string()
       .min(12)
       .max(100)
-      .refine((password) => {
-        return (
+      .refine(
+        (password) =>
           /[a-z]/.test(password) &&
           /[A-Z]/.test(password) &&
           /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/.test(
             password
-          )
-        );
-      }, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
+          ),
+        `Password must contain at least one uppercase letter, one lowercase letter, one number and one special character`
+      ),
     confirmPassword: z.string().min(12).max(100),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+    message: `Passwords do not match`,
+    path: [`confirmPassword`],
+  })
 
 const formDefaultValues = {
-  username: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
+  username: ``,
+  email: ``,
+  password: ``,
+  confirmPassword: ``,
+}
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
-const SuccessFullyRegisterd = () => {
-  return (
-    <>
-      <TabsContent value="register">
-        <SheetHeader>
-          <SheetTitle>Successfully Registered</SheetTitle>
-          <SheetDescription className="text-gray-500">
-            Verify your email address to complete the registration process
-          </SheetDescription>
-        </SheetHeader>
-      </TabsContent>
-      <SheetFooter className="mt-8">
-        <SheetClose asChild>
-          <Button className="w-full" variant="outline">
-            Close
-          </Button>
-        </SheetClose>
-      </SheetFooter>
-    </>
-  );
-};
+const SuccessFullyRegisterd = () => (
+  <>
+    <TabsContent value="register">
+      <SheetHeader>
+        <SheetTitle>Successfully Registered</SheetTitle>
+        <SheetDescription className="text-gray-500">
+          Verify your email address to complete the registration process
+        </SheetDescription>
+      </SheetHeader>
+    </TabsContent>
+    <SheetFooter className="mt-8">
+      <SheetClose asChild>
+        <Button className="w-full" variant="outline">
+          Close
+        </Button>
+      </SheetClose>
+    </SheetFooter>
+  </>
+)
 
 export const RegisterTab = () => {
-  const [register, { isSuccess }] = useRegisterMutation();
-  const { toast } = useToast();
+  const [register, { isSuccess }] = useRegisterMutation()
+  const { toast } = useToast()
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: formDefaultValues,
-    mode: "all",
-  });
+    mode: `all`,
+  })
 
   const onSubmit = useCallback(
     (values: FormValues) => {
@@ -98,26 +96,25 @@ export const RegisterTab = () => {
       })
         .unwrap()
         .then(() => {
-          form.reset();
+          form.reset()
           toast({
-            title: "Successfully Registered",
-            description:
-              "Verify your email address to complete the registration process",
-            variant: "success",
-          });
+            title: `Successfully Registered`,
+            description: `Verify your email address to complete the registration process`,
+            variant: `success`,
+          })
         })
         .catch((err: SignupErrorResponse) => {
           toast({
-            title: "Something went wrong",
+            title: `Something went wrong`,
             description: JSON.stringify(err.data.error.message),
-            variant: "destructive",
-          });
-        });
+            variant: `destructive`,
+          })
+        })
     },
     [form, register, toast]
-  );
+  )
   if (form.formState.isSubmitSuccessful && isSuccess)
-    return <SuccessFullyRegisterd />;
+    return <SuccessFullyRegisterd />
   return (
     <TabsContent value="register">
       <SheetHeader>
@@ -202,5 +199,5 @@ export const RegisterTab = () => {
         </form>
       </Form>
     </TabsContent>
-  );
-};
+  )
+}

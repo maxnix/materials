@@ -1,5 +1,3 @@
-import { EmailValidation } from "@/feature/auth/components/EmailVerified";
+import { EmailValidation } from "@/feature/auth/components/EmailVerified"
 
-export const EmailVericationRoute = () => {
-  return <EmailValidation />;
-};
+export const EmailVericationRoute = () => <EmailValidation />

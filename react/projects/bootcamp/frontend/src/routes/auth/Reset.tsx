@@ -1,5 +1,3 @@
-import { ResetPassword } from "@/feature/auth/components/ResetPassword";
+import { ResetPassword } from "@/feature/auth/components/ResetPassword"
 
-export const ResetRoute = () => {
-  return <ResetPassword />;
-};
+export const ResetRoute = () => <ResetPassword />

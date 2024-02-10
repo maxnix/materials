@@ -1,66 +1,66 @@
 export interface SignupResponse {
-  jwt: string;
+  jwt: string
   user: {
-    id: string;
-    username: string;
-    email: string;
-  };
+    id: string
+    username: string
+    email: string
+  }
 }
 
 export interface SignupCredentials {
-  username: string;
-  email: string;
-  password: string;
+  username: string
+  email: string
+  password: string
 }
 
 export interface Credentials {
-  username: string;
-  email: string;
-  password: string;
+  username: string
+  email: string
+  password: string
 }
 
 export interface LoginCredentials {
-  identifier: string;
-  password: string;
+  identifier: string
+  password: string
 }
 
 export interface AdminLoginCredentials {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface LoginResponse extends SignupResponse {}
 
 export type JWTDecodePayload = {
-  id: string;
-  iat: number;
-  exp: number;
-};
+  id: string
+  iat: number
+  exp: number
+}
 
 export type SignupErrorResponse = {
   data: {
-    data: null;
+    data: null
     error: {
-      status: number;
-      name: string;
-      message: string;
-      datails: Record<string, unknown>;
-    };
-  };
-};
+      status: number
+      name: string
+      message: string
+      datails: Record<string, unknown>
+    }
+  }
+}
 
 export type ForgotPasswordRequest = {
-  email: string;
-};
+  email: string
+}
 
 export type ForgotPasswordResponse = {
-  ok: boolean;
-};
+  ok: boolean
+}
 
 export type ResetPasswordRequest = {
-  code: string;
-  password: string;
-  passwordConfirmation: string;
-};
+  code: string
+  password: string
+  passwordConfirmation: string
+}
 
-export type ResetPasswordResponse = SignupResponse;
+export type ResetPasswordResponse = SignupResponse
