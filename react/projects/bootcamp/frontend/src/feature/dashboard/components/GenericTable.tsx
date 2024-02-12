@@ -53,7 +53,7 @@ export const GenericTable = <TData,>({
         ))}
       </TableHeader>
       <TableBody>
-        {table.getRowModel().rows.length ? (
+        {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
@@ -68,7 +68,7 @@ export const GenericTable = <TData,>({
           ))
         ) : (
           <TableRow className="cursor-pointer">
-            <TableCell colSpan={columns.length} className="h-24 text-center">
+            <TableCell colSpan={columns?.length} className="h-24 text-center">
               No results.
             </TableCell>
           </TableRow>

@@ -3,8 +3,8 @@ import { BootcampTable } from "../components/BootcampTable"
 import { CourseTable } from "../components/CourseTable"
 
 export const DashboardPage = () => {
-  const { data } = useGetProfileQuery()
-  console.log(data)
+  useGetProfileQuery()
+
   return (
     <div className="max-w-[1140px] mx-auto">
       <h1 className="text-3xl font-bold">Dashboard</h1>

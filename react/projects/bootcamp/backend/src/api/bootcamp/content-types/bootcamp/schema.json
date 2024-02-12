@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bootcamp",
     "pluralName": "bootcamps",
-    "displayName": "Bootcamp"
+    "displayName": "Bootcamp",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,14 +20,15 @@
       "default": 0
     },
     "Cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "Starts": {
       "type": "datetime"
@@ -51,6 +53,16 @@
       "relation": "manyToOne",
       "target": "api::course.course",
       "inversedBy": "bootcamps"
+    },
+    "entrants": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "bootcamps"
+    },
+    "seats": {
+      "type": "integer",
+      "default": 25
     }
   }
 }

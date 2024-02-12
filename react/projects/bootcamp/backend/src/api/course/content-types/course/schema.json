@@ -36,6 +36,12 @@
       "relation": "oneToMany",
       "target": "api::bootcamp.bootcamp",
       "mappedBy": "course"
+    },
+    "students": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "courses"
     }
   }
 }

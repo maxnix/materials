@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { profileApi } from "@/service/api/profile"
+import { Bootcamp, Course } from "@/service/api/profile/types"
 
 interface ProfileState {
   username: string | null
@@ -10,6 +11,24 @@ interface ProfileState {
   id: number | null
   provider: string | null
   updatedAt: string | null
+  courses:
+    | Omit<
+        Course,
+        "publishedAt" | "createdAt" | "updatedAt" | "weeks" | "Description"
+      >[]
+    | null
+
+  bootcamps:
+    | Omit<
+        Bootcamp,
+        | "publishedAt"
+        | "Iscrizioni"
+        | "createdAt"
+        | "updatedAt"
+        | "seats"
+        | "Description"
+      >[]
+    | null
 }
 
 const initialState: ProfileState = {
@@ -21,6 +40,8 @@ const initialState: ProfileState = {
   id: null,
   provider: null,
   updatedAt: null,
+  bootcamps: null,
+  courses: null,
 }
 
 const profileSlice = createSlice({
@@ -46,6 +67,8 @@ const profileSlice = createSlice({
         state.id = action.payload.id
         state.provider = action.payload.provider
         state.updatedAt = action.payload.updatedAt
+        state.bootcamps = action.payload.bootcamps
+        state.courses = action.payload.courses
       }
     )
   },
