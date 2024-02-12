@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { createApi } from "@reduxjs/toolkit/query/react"
 import {
   AdminLoginCredentials,
   Credentials,
@@ -7,23 +7,10 @@ import {
   ResetPasswordRequest,
   ResetPasswordResponse,
   SignupResponse,
-} from "./types"
-import { RootState } from "@/service/redux/store"
+} from "../auth/types"
+import { strapiAuthFetchQuery } from "../utils/strapiAuthFetchQuery"
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: `http://localhost:1337/api`,
-  headers: {
-    "Content-Type": `application/json`,
-  },
-  credentials: `include`,
-  prepareHeaders: (headers, { getState }) => {
-    const { token } = (getState() as RootState).auth
-    if (token) {
-      headers.set(`Authorization`, `Bearer ${token}`)
-    }
-    return headers
-  },
-})
+const baseQuery = strapiAuthFetchQuery
 
 const publicRegistrationUrl = `/auth/local`
 const adminRegistrationUrl = `/admin/auth/local`

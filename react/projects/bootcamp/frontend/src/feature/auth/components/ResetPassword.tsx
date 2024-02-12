@@ -13,12 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
-import { useResetPasswordMutation } from "../api"
+import { useResetPasswordMutation } from "../../../service/api/auth"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
 import { useAppDispatch } from "@/service/redux/hooks"
-import { setToken, setUsername } from "../slice"
+import { setToken, setUsername } from "../../../service/redux/slice/auth"
 import { UnstyledLayout } from "@/feature/layout/UnstyledLayout"
-import { SignupErrorResponse } from "../api/types"
+import { SignupErrorResponse } from "../../../service/api/auth/types"
 import { Button } from "@/components/ui/button/button"
 
 const formSchema = z

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useCallback } from "react"
 import { Button } from "@/components/ui/button/button"
 import { useAppDispatch, useAppSelector } from "@/service/redux/hooks"
-import { logout } from "../auth/slice"
+import { logout } from "../../service/redux/slice/auth"
 import { Toaster } from "@/components/ui/toast"
 
 export const PublicLayout = ({ children }: { children: React.ReactNode }) => (

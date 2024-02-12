@@ -21,9 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
-import { useRegisterMutation } from "../api"
+import { useRegisterMutation } from "../../../service/api/auth"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { SignupErrorResponse } from "../api/types"
+import { SignupErrorResponse } from "../../../service/api/auth/types"
 
 const formSchema = z
   .object({

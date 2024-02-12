@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button/button"
 import HeroImg from "../image/IntroImg.jpeg"
 
@@ -24,7 +25,9 @@ export const TopHero = () => (
             Accresci costantemente le tue competenze professionali grazie ai
             nostri corsi pratici sul campo e progetti pazzeschi
           </h3>
-          <Button className="w-fit">Scopri i corsi</Button>
+          <Link to="app/dashboard">
+            <Button className="w-fit">Scopri i corsi</Button>
+          </Link>
         </div>
       </div>
       <div className="flex flex-col w-2/3 h-full bg-white">

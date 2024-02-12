@@ -10,6 +10,7 @@ export const DashboardLayout = () => {
   }, [navigate])
   return (
     <PublicLayout>
+      <div className="w-full h-16 nac-spacer" />
       <Outlet />
     </PublicLayout>
   )

@@ -20,7 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form/form"
 import { Input } from "@/components/ui/input"
-import { useForgotPasswordMutation } from "../api"
+import { useForgotPasswordMutation } from "../../../service/api/auth"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
 
 const formSchema = z.object({

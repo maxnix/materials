@@ -19,11 +19,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
-import { useLoginMutation, useResendEmailVerificationMutation } from "../api"
-import { setToken } from "../slice"
+import {
+  useLoginMutation,
+  useResendEmailVerificationMutation,
+} from "../../../service/api/auth"
+import { setToken } from "../../../service/redux/slice/auth"
 import { useAppDispatch } from "@/service/redux/hooks"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { SignupErrorResponse } from "../api/types"
+import { SignupErrorResponse } from "../../../service/api/auth/types"
 import { ToastAction } from "@/components/ui/toast"
 
 const formSchema = z.object({

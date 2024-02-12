@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom"
 import App from "./App.tsx"
 import "./index.css"
 import { store } from "./service/redux/store.ts"
-import { authInit } from "./feature/auth/slice/index.ts"
+import { authInit } from "./service/redux/slice/auth/index.ts"
 
 store.dispatch(authInit())
 

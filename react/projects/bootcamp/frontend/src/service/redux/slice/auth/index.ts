@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import { jwtDecode } from "jwt-decode"
-import { authApi } from "../api"
-import { JWTDecodePayload } from "../api/types"
+import { authApi } from "../../../api/auth"
+import { JWTDecodePayload } from "../../../api/auth/types"
 
 interface AuthState {
   token: string | null
