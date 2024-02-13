@@ -1,3 +1,3 @@
-import { ObjectState } from "./risultato/useState/ObjectState"
+import { Contatore } from "./risultato/useState/Contatore"
 
-export const RisultatoBasiReact = () => <ObjectState />
+export const RisultatoBasiReact = () => <Contatore />
