@@ -124,4 +124,12 @@
   .card {
     @apply w-fit h-24 min-w-96 border-solid border border-zinc-700 flex gap-4 bg-zinc-900 p-4 items-center rounded-md;
   }
+
+  .btn-primary {
+    @apply bg-green-900 hover:bg-green-700 border-0;
+  }
+
+  .container {
+    @apply mx-auto px-4;
+  }
 }
