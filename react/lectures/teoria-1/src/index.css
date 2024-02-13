@@ -129,6 +129,10 @@
     @apply bg-green-900 hover:bg-green-700 border-0 focus:outline-none;
   }
 
+  .btn-tab {
+    @apply bg-zinc-900 rounded-none border-0 focus:outline-none;
+  }
+
   .btn-disruptive {
     @apply bg-red-900 hover:bg-red-400 border-0 focus:outline-none;
   }

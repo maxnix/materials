@@ -1,3 +1,3 @@
-import { Contatore } from "./risultato/useState/Contatore"
+import { Operators } from "./risultato/ternary/Operators"
 
-export const RisultatoBasiReact = () => <Contatore />
+export const RisultatoBasiReact = () => <Operators />
