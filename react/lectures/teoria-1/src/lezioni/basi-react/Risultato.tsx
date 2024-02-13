@@ -1,3 +1,3 @@
-import { HooksRules } from "./risultato/useState/Rules"
+import { ObjectState } from "./risultato/useState/ObjectState"
 
-export const RisultatoBasiReact = () => <HooksRules />
+export const RisultatoBasiReact = () => <ObjectState />
