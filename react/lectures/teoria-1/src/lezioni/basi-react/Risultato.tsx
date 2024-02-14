@@ -1,3 +1,3 @@
-import { Operators } from "./risultato/ternary/Operators"
+import { DataFetching } from "./risultato/useEffect/DataFetching"
 
-export const RisultatoBasiReact = () => <Operators />
+export const RisultatoBasiReact = () => <DataFetching />
