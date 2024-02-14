@@ -68,10 +68,10 @@ const OperatorValue = ({ operator }: OperatorProps) => {
       <div className="flex flex-col gap-3">
         <ul>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
-            OR: {state === `or` ? `||` : `Non è or`}
+            OR: {state === `or` || `Falback`}
           </li>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
-            AND: {state === `and` ? `&&` : `Non è and`}
+            AND: {state === `and` && `Show this`}
           </li>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
             Nullish: {state ?? `È null`}
@@ -103,19 +103,19 @@ const OperatorWithComponent = () => {
           <li>
             <button
               type="button"
-              onClick={() => setShow(false)}
-              className={`btn ${show ? `btn-tab hover:bg-green-950` : `btn-primary`}`}
+              onClick={() => setShow(true)}
+              className={`btn ${show ? `btn-primary` : `btn-tab hover:bg-green-950`}`}
             >
-              Hide
+              True
             </button>
           </li>
           <li>
             <button
               type="button"
-              onClick={() => setShow(null)}
-              className={`btn ${show === null ? `btn-primary` : `btn-tab hover:bg-green-950`}`}
+              onClick={() => setShow(false)}
+              className={`btn ${show ? `btn-tab hover:bg-green-950` : `btn-primary`}`}
             >
-              Null
+              False
             </button>
           </li>
         </ul>
@@ -133,6 +133,15 @@ const OperatorWithComponent = () => {
           {show ?? (
             <li className="p-2 bg-zinc-800 border-b border-zinc-700">
               NULLISH: <Componente />
+            </li>
+          )}
+          {show ? (
+            <li className="p-2 bg-zinc-800 border-b border-zinc-700">
+              TERNARY - TRUE <Componente />
+            </li>
+          ) : (
+            <li className="p-2 bg-zinc-800 border-b border-zinc-700">
+              TERNARY - FALSE
             </li>
           )}
         </ul>

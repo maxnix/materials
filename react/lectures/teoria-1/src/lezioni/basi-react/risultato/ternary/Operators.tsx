@@ -68,13 +68,17 @@ const OperatorValue = ({ operator }: OperatorProps) => {
       <div className="flex flex-col gap-3">
         <ul>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
-            OR: {state === `or` ? `||` : `Non è or`}
+            {/* OR: {state === `or` || `Fallback`} */}
+            OR: {state || `Fallback`}
           </li>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
-            AND: {state === `and` ? `&&` : `Non è and`}
+            AND: {state === `and` && `Show this`}
           </li>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
             Nullish: {state ?? `È null`}
+          </li>
+          <li className="p-2 bg-zinc-800 border-b border-zinc-700">
+            TERNARY: {state ? `TRUE` : `FALSE`}
           </li>
         </ul>
       </div>
@@ -97,7 +101,7 @@ const OperatorWithComponent = () => {
               onClick={() => setShow(true)}
               className={`btn ${show ? `btn-primary` : `btn-tab hover:bg-green-950`}`}
             >
-              Show
+              True
             </button>
           </li>
           <li>
@@ -106,7 +110,7 @@ const OperatorWithComponent = () => {
               onClick={() => setShow(false)}
               className={`btn ${show ? `btn-tab hover:bg-green-950` : `btn-primary`}`}
             >
-              Hide
+              False
             </button>
           </li>
           <li>
@@ -133,6 +137,15 @@ const OperatorWithComponent = () => {
           {show ?? (
             <li className="p-2 bg-zinc-800 border-b border-zinc-700">
               NULLISH: <Componente />
+            </li>
+          )}
+          {show ? (
+            <li className="p-2 bg-zinc-800 border-b border-zinc-700">
+              TERNARY - TRUE <Componente />
+            </li>
+          ) : (
+            <li className="p-2 bg-zinc-800 border-b border-zinc-700">
+              TERNARY - FALSE
             </li>
           )}
         </ul>
