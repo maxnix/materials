@@ -47,7 +47,7 @@ export const BootcampTable = () => {
   const { bootcamps } = useAppSelector((state) => state.profile)
 
   return (
-    <div className="flex flex-col max-w-[1140px] mx-auto gap-4">
+    <div className="flex flex-col max-w-[1140px] mx-auto gap-4 w-full">
       <h2 className="text-xl font-regular">Bootcamp</h2>
       {bootcamps && bootcamps?.length > 0 ? (
         <GenericTable data={bootcamps!} columns={columns} />

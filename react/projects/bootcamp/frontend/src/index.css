@@ -76,4 +76,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .Image {
+    @apply object-cover h-full w-full;
+  }
 }

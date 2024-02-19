@@ -55,7 +55,7 @@ const columns = [
 export const CourseTable = () => {
   const { courses } = useAppSelector((state) => state.profile)
   return (
-    <div className="flex flex-col max-w-[1140px] mx-auto gap-4">
+    <div className="flex flex-col max-w-[1140px] mx-auto gap-4 w-full">
       <h2 className="text-xl font-regular">Corsi</h2>
       {courses && courses?.length > 0 ? (
         <GenericTable data={courses} columns={columns} />

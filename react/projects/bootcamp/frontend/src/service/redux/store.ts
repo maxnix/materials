@@ -3,6 +3,8 @@ import authReducer from "./slice/auth"
 import { authApi } from "@/service/api/auth"
 import { profileApi } from "../api/profile"
 import profileReducer from "./slice/profile"
+import { courseApi } from "../api/course"
+import { bootcampApi } from "../api/bootcamp"
 
 export const store = configureStore({
   reducer: {
@@ -10,9 +12,16 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     profile: profileReducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [courseApi.reducerPath]: courseApi.reducer,
+    [bootcampApi.reducerPath]: bootcampApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware),
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      profileApi.middleware,
+      courseApi.middleware,
+      bootcampApi.middleware
+    ),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
