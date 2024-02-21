@@ -393,6 +393,7 @@ export interface ApiBootcampBootcamp extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     seats: Attribute.Integer & Attribute.DefaultTo<25>;
+    info: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -417,6 +418,7 @@ export interface ApiCourseCourse extends Schema.CollectionType {
     singularName: 'course';
     pluralName: 'courses';
     displayName: 'Course';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -437,6 +439,7 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
+    cover: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -12,7 +12,8 @@ export const courseApi = createApi({
       providesTags: [`Course`],
     }),
     getLast3Courses: build.query<GetCourseResponse, void>({
-      query: () => `/courses?pagination[limit]=3&sort[0]=createdAt:desc`,
+      query: () =>
+        `/courses?populate=*&pagination[limit]=3&sort[0]=createdAt:desc`,
       providesTags: [`Course`],
     }),
     getCourse: build.query<Course, string>({

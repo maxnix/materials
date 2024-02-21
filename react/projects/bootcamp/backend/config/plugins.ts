@@ -7,8 +7,8 @@ export default ({ env }) => ({
         apiKey: env("SENDGRID_API_KEY"),
       },
       settings: {
-        defaultFrom: "hpv4learning@gmail.com",
-        defaultReplyTo: "hpv4learning@gmail.com",
+        defaultFrom: "info@hpv4learning.it",
+        defaultReplyTo: "info@hpv4learning.it",
       },
     },
   },

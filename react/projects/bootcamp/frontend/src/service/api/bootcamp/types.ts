@@ -1,3 +1,5 @@
+import { SingleImageType } from "../types/shared"
+
 type BootcampAttributes = {
   Description: unknown[]
   Iscrizioni: number
@@ -9,6 +11,8 @@ type BootcampAttributes = {
   publishedAt: string
   seats: null | number
   updatedAt: string
+  info: string
+  Cover: { data: SingleImageType }
 }
 
 export type Bootcamp = {

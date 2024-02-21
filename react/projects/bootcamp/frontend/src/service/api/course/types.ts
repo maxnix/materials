@@ -1,3 +1,5 @@
+import { SingleImageType } from "../types/shared"
+
 type CourseAttributes = {
   Description: string
   Lessons: number
@@ -8,6 +10,7 @@ type CourseAttributes = {
   publishedAt: string
   updatedAt: string
   weeks: string
+  Cover: { data: SingleImageType }
 }
 
 export type Course = {

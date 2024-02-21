@@ -35,7 +35,7 @@ const CourseTab = () => {
     <div className="grid grid-cols-2 grid-rows-1 gap-8">
       <Post
         title={firstPost.attributes.Title}
-        img="https://source.unsplash.com/random"
+        img={`${import.meta.env.VITE_STRAPI_URL}${firstPost.attributes.cover.data.attributes.url}`}
         description={firstPost.attributes.Description}
         slug={firstPost.id.toString()}
         category={firstPost.attributes.level}
@@ -46,7 +46,7 @@ const CourseTab = () => {
           <Post
             key={post.id}
             title={post.attributes.Title}
-            img="https://source.unsplash.com/random"
+            img={`${import.meta.env.VITE_STRAPI_URL}${post.attributes.cover.data.attributes.url}`}
             description={post.attributes.Description}
             slug={post.id.toString()}
             category={post.attributes.level}
@@ -67,9 +67,10 @@ const BootcampTab = () => {
     <div className="grid grid-cols-2 grid-rows-1 gap-8">
       <Post
         title={firstPost.attributes.Title}
-        img="https://source.unsplash.com/random"
+        img={`${import.meta.env.VITE_STRAPI_URL}${firstPost.attributes.Cover.data.attributes.url}`}
         slug={firstPost.id.toString()}
         category={new Date(firstPost.attributes.Starts).toLocaleDateString()}
+        description={firstPost.attributes.info}
         size="full"
       />
       <div className="grid grid-rows-2 gap-8">
@@ -77,7 +78,8 @@ const BootcampTab = () => {
           <Post
             key={post.id}
             title={post.attributes.Title}
-            img="https://source.unsplash.com/random"
+            description={post.attributes.info}
+            img={`${import.meta.env.VITE_STRAPI_URL}${post.attributes.Cover.data.attributes.url}`}
             slug={post.id.toString()}
             category={new Date(post.attributes.Starts).toLocaleDateString()}
             variant="horizontal"

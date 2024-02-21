@@ -63,6 +63,9 @@
     "seats": {
       "type": "integer",
       "default": 25
+    },
+    "info": {
+      "type": "text"
     }
   }
 }

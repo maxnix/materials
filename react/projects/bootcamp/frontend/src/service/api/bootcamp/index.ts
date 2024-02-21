@@ -12,7 +12,8 @@ export const bootcampApi = createApi({
       providesTags: [`Bootcamp`],
     }),
     getLast3Bootcamps: build.query<GetBootcampResponse, void>({
-      query: () => `/bootcamps?pagination[limit]=3&sort[0]=createdAt:desc`,
+      query: () =>
+        `/bootcamps?pagination[limit]=3&sort[0]=createdAt:desc&populate=*`,
       providesTags: [`Bootcamp`],
     }),
     getBootcamp: build.query<Bootcamp, string>({

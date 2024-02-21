@@ -23,13 +23,11 @@ export interface AdminPermission extends Schema.CollectionType {
       Attribute.SetMinMaxLength<{
         minLength: 1
       }>
-
     actionParameters: Attribute.JSON & Attribute.DefaultTo<{}>
     subject: Attribute.String &
       Attribute.SetMinMaxLength<{
         minLength: 1
       }>
-
     properties: Attribute.JSON & Attribute.DefaultTo<{}>
     conditions: Attribute.JSON & Attribute.DefaultTo<[]>
     role: Attribute.Relation<"admin::permission", "manyToOne", "admin::role">
@@ -362,6 +360,102 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   }
 }
 
+export interface ApiBootcampBootcamp extends Schema.CollectionType {
+  collectionName: "bootcamps"
+  info: {
+    singularName: "bootcamp"
+    pluralName: "bootcamps"
+    displayName: "Bootcamp"
+    description: ""
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    Title: Attribute.String
+    Iscrizioni: Attribute.Integer & Attribute.DefaultTo<0>
+    Cover: Attribute.Media
+    Starts: Attribute.DateTime
+    ends: Attribute.DateTime
+    isRemote: Attribute.Boolean
+    Description: Attribute.Blocks
+    Lessons: Attribute.Component<"bootcamp.activity", true>
+    course: Attribute.Relation<
+      "api::bootcamp.bootcamp",
+      "manyToOne",
+      "api::course.course"
+    >
+    entrants: Attribute.Relation<
+      "api::bootcamp.bootcamp",
+      "manyToMany",
+      "plugin::users-permissions.user"
+    >
+    seats: Attribute.Integer & Attribute.DefaultTo<25>
+    info: Attribute.Text
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    publishedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<
+      "api::bootcamp.bootcamp",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private
+    updatedBy: Attribute.Relation<
+      "api::bootcamp.bootcamp",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private
+  }
+}
+
+export interface ApiCourseCourse extends Schema.CollectionType {
+  collectionName: "courses"
+  info: {
+    singularName: "course"
+    pluralName: "courses"
+    displayName: "Course"
+    description: ""
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    Title: Attribute.String
+    Description: Attribute.Text
+    weeks: Attribute.String
+    Lessons: Attribute.Integer
+    level: Attribute.Enumeration<["beginner", "intermediate", "advanced"]>
+    bootcamps: Attribute.Relation<
+      "api::course.course",
+      "oneToMany",
+      "api::bootcamp.bootcamp"
+    >
+    students: Attribute.Relation<
+      "api::course.course",
+      "manyToMany",
+      "plugin::users-permissions.user"
+    >
+    cover: Attribute.Media
+    createdAt: Attribute.DateTime
+    updatedAt: Attribute.DateTime
+    publishedAt: Attribute.DateTime
+    createdBy: Attribute.Relation<
+      "api::course.course",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private
+    updatedBy: Attribute.Relation<
+      "api::course.course",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private
+  }
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: "files"
   info: {
@@ -678,7 +772,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   }
   options: {
     draftAndPublish: false
-    timestamps: true
   }
   attributes: {
     username: Attribute.String &
@@ -706,6 +799,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       "plugin::users-permissions.user",
       "manyToOne",
       "plugin::users-permissions.role"
+    >
+    courses: Attribute.Relation<
+      "plugin::users-permissions.user",
+      "manyToMany",
+      "api::course.course"
+    >
+    bootcamps: Attribute.Relation<
+      "plugin::users-permissions.user",
+      "manyToMany",
+      "api::bootcamp.bootcamp"
     >
     createdAt: Attribute.DateTime
     updatedAt: Attribute.DateTime
@@ -768,87 +871,6 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   }
 }
 
-export interface ApiBootcampBootcamp extends Schema.CollectionType {
-  collectionName: "bootcamps"
-  info: {
-    singularName: "bootcamp"
-    pluralName: "bootcamps"
-    displayName: "Bootcamp"
-  }
-  options: {
-    draftAndPublish: true
-  }
-  attributes: {
-    Title: Attribute.String
-    Iscrizioni: Attribute.Integer & Attribute.DefaultTo<0>
-    Cover: Attribute.Media
-    Starts: Attribute.DateTime
-    ends: Attribute.DateTime
-    isRemote: Attribute.Boolean
-    Description: Attribute.Blocks
-    Lessons: Attribute.Component<"bootcamp.activity", true>
-    course: Attribute.Relation<
-      "api::bootcamp.bootcamp",
-      "manyToOne",
-      "api::course.course"
-    >
-    createdAt: Attribute.DateTime
-    updatedAt: Attribute.DateTime
-    publishedAt: Attribute.DateTime
-    createdBy: Attribute.Relation<
-      "api::bootcamp.bootcamp",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-    updatedBy: Attribute.Relation<
-      "api::bootcamp.bootcamp",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-  }
-}
-
-export interface ApiCourseCourse extends Schema.CollectionType {
-  collectionName: "courses"
-  info: {
-    singularName: "course"
-    pluralName: "courses"
-    displayName: "Course"
-  }
-  options: {
-    draftAndPublish: true
-  }
-  attributes: {
-    Title: Attribute.String
-    Description: Attribute.Text
-    weeks: Attribute.String
-    Lessons: Attribute.Integer
-    level: Attribute.Enumeration<["beginner", "intermediate", "advanced"]>
-    bootcamps: Attribute.Relation<
-      "api::course.course",
-      "oneToMany",
-      "api::bootcamp.bootcamp"
-    >
-    createdAt: Attribute.DateTime
-    updatedAt: Attribute.DateTime
-    publishedAt: Attribute.DateTime
-    createdBy: Attribute.Relation<
-      "api::course.course",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-    updatedBy: Attribute.Relation<
-      "api::course.course",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private
-  }
-}
-
 declare module "@strapi/types" {
   export module Shared {
     export interface ContentTypes {
@@ -859,6 +881,8 @@ declare module "@strapi/types" {
       "admin::api-token-permission": AdminApiTokenPermission
       "admin::transfer-token": AdminTransferToken
       "admin::transfer-token-permission": AdminTransferTokenPermission
+      "api::bootcamp.bootcamp": ApiBootcampBootcamp
+      "api::course.course": ApiCourseCourse
       "plugin::upload.file": PluginUploadFile
       "plugin::upload.folder": PluginUploadFolder
       "plugin::content-releases.release": PluginContentReleasesRelease
@@ -867,8 +891,6 @@ declare module "@strapi/types" {
       "plugin::users-permissions.role": PluginUsersPermissionsRole
       "plugin::users-permissions.user": PluginUsersPermissionsUser
       "plugin::i18n.locale": PluginI18NLocale
-      "api::bootcamp.bootcamp": ApiBootcampBootcamp
-      "api::course.course": ApiCourseCourse
     }
   }
 }

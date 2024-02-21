@@ -2,7 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { RootState } from "@/service/redux/store"
 
 export const strapiAuthFetchQuery = fetchBaseQuery({
-  baseUrl: `http://localhost:1337/api`,
+  baseUrl: import.meta.env.VITE_STRAPI_API_URL as string,
   headers: {
     "Content-Type": `application/json`,
   },
