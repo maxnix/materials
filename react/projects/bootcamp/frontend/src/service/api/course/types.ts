@@ -10,7 +10,7 @@ type CourseAttributes = {
   publishedAt: string
   updatedAt: string
   weeks: string
-  Cover: { data: SingleImageType }
+  cover: { data: SingleImageType }
 }
 
 export type Course = {

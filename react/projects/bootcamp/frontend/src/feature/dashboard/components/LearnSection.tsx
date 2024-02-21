@@ -37,7 +37,7 @@ const CourseTab = () => {
         title={firstPost.attributes.Title}
         img={`${import.meta.env.VITE_STRAPI_URL}${firstPost.attributes.cover.data.attributes.url}`}
         description={firstPost.attributes.Description}
-        slug={firstPost.id.toString()}
+        slug={`/app/course/${firstPost.id}`}
         category={firstPost.attributes.level}
         size="full"
       />
@@ -48,7 +48,7 @@ const CourseTab = () => {
             title={post.attributes.Title}
             img={`${import.meta.env.VITE_STRAPI_URL}${post.attributes.cover.data.attributes.url}`}
             description={post.attributes.Description}
-            slug={post.id.toString()}
+            slug={`/app/course/${post.id}`}
             category={post.attributes.level}
             variant="horizontal"
             size="full"
@@ -68,7 +68,7 @@ const BootcampTab = () => {
       <Post
         title={firstPost.attributes.Title}
         img={`${import.meta.env.VITE_STRAPI_URL}${firstPost.attributes.Cover.data.attributes.url}`}
-        slug={firstPost.id.toString()}
+        slug={`/app/bootcamp/${firstPost.id}`}
         category={new Date(firstPost.attributes.Starts).toLocaleDateString()}
         description={firstPost.attributes.info}
         size="full"
@@ -80,7 +80,7 @@ const BootcampTab = () => {
             title={post.attributes.Title}
             description={post.attributes.info}
             img={`${import.meta.env.VITE_STRAPI_URL}${post.attributes.Cover.data.attributes.url}`}
-            slug={post.id.toString()}
+            slug={`/app/bootcamp/${post.id}`}
             category={new Date(post.attributes.Starts).toLocaleDateString()}
             variant="horizontal"
             size="full"

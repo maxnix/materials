@@ -1,13 +1,15 @@
-import { useRoutes } from "react-router-dom"
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { routes } from "./routes"
 import { useAppSelector } from "./service/redux/hooks"
 
-function App() {
+const App = () => {
   const { token } = useAppSelector((state) => state.auth)
   const isLoggedIn = !!token
-  const router = useRoutes(routes(isLoggedIn))
+  const router = createBrowserRouter(routes(isLoggedIn))
 
-  return router
+  return (
+    <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+  )
 }
 
 export default App

@@ -8,7 +8,7 @@ export const bootcampApi = createApi({
   tagTypes: [`Bootcamp`],
   endpoints: (build) => ({
     getBootcampList: build.query<GetBootcampResponse, void>({
-      query: () => `/bootcamps`,
+      query: () => `/bootcamps?populate=*`,
       providesTags: [`Bootcamp`],
     }),
     getLast3Bootcamps: build.query<GetBootcampResponse, void>({
@@ -17,7 +17,7 @@ export const bootcampApi = createApi({
       providesTags: [`Bootcamp`],
     }),
     getBootcamp: build.query<Bootcamp, string>({
-      query: (id) => `bootcamps/${id}`,
+      query: (id) => `bootcamps/${id}?populate=*`,
       providesTags: [`Bootcamp`],
     }),
   }),

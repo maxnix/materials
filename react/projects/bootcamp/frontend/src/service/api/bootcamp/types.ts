@@ -1,7 +1,7 @@
 import { SingleImageType } from "../types/shared"
 
 type BootcampAttributes = {
-  Description: unknown[]
+  Description: Block[]
   Iscrizioni: number
   Starts: string
   Title: string
@@ -13,7 +13,36 @@ type BootcampAttributes = {
   updatedAt: string
   info: string
   Cover: { data: SingleImageType }
+  Lessons: BootcampLesson[]
 }
+
+export type BootcampLesson = {
+  id: number
+  Title: string
+  Description: string
+}
+
+export type HeadingBlock = {
+  level: 1 | 2 | 3 | 4 | 5 | 6
+  type: "heading"
+  children: [{ type: "text"; text: string }]
+}
+
+export type ParagraphBlock = {
+  type: "paragraph"
+  children: [{ type: "text"; text: string }]
+}
+
+export type ListBlock = {
+  type: "list"
+  format: "unordered"
+  children: {
+    type: "list"
+    children: [{ type: "text"; text: string }]
+  }[]
+}
+
+export type Block = HeadingBlock | ParagraphBlock | ListBlock
 
 export type Bootcamp = {
   id: number
