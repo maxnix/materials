@@ -66,6 +66,9 @@
     },
     "info": {
       "type": "text"
+    },
+    "payment_link": {
+      "type": "string"
     }
   }
 }

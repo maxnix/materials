@@ -1,10 +1,14 @@
-import { useGetProfileQuery } from "@/service/api/profile"
+import { useAppSelector } from "@/service/redux/hooks"
 import { BootcampTable } from "../components/BootcampTable"
 import { CourseTable } from "../components/CourseTable"
 import { LearnSection } from "../components/LearnSection"
+import { useGetUserPaymentsQuery } from "@/service/api/profile"
 
 export const DashboardPage = () => {
-  useGetProfileQuery()
+  const mail = useAppSelector((state) => state.profile.email)
+  const { data: userPayments, error } = useGetUserPaymentsQuery({
+    email: mail!,
+  })
 
   return (
     <div className="max-w-[1140px] mx-auto">

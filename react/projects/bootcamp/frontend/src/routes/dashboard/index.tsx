@@ -6,6 +6,9 @@ import { bootcampApi } from "@/service/api/bootcamp"
 import { SingleCoursePage } from "@/feature/course/pages/SingleCoursePage"
 import { store } from "@/service/redux/store"
 import { SingleBootcampPage } from "@/feature/course/pages/SingleBottcampPage"
+import { ProfileSheet } from "@/feature/profile/components/ProfileSheet"
+import { TransactionTab } from "@/feature/profile/components/TransactionTab"
+import { ProfileInfoTab } from "@/feature/profile/components/InfoTab"
 
 const useCourseLoader = async ({
   params,
@@ -68,6 +71,20 @@ export const dashboardRoutes = (isLogged?: boolean): RouteObject[] => [
         path: `bootcamp/:id`,
         element: <SingleBootcampPage />,
         loader: useBootcampLoader,
+      },
+      {
+        path: `profile`,
+        element: <ProfileSheet />,
+        children: [
+          {
+            path: `transactions`,
+            element: <TransactionTab />,
+          },
+          {
+            path: `info`,
+            element: <ProfileInfoTab />,
+          },
+        ],
       },
     ],
   },

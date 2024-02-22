@@ -10,7 +10,6 @@ import { BootcampInfo } from "../components/BootcampInfo"
 export const SingleBootcampPage = () => {
   const { data } = useLoaderData() as BootcamLoaderType
   const { data: bootcampData, isLoading } = data || {}
-  console.log(bootcampData)
   const heroData = useMemo(
     () => ({
       title: bootcampData?.attributes.Title || `Bootcamp Title`,
@@ -28,6 +27,7 @@ export const SingleBootcampPage = () => {
       isRemote: bootcampData?.attributes.isRemote || false,
       seats: bootcampData?.attributes.seats || 0,
       Iscrizioni: bootcampData?.attributes.Iscrizioni || 0,
+      payment_link: bootcampData?.attributes.payment_link!,
     }),
     [bootcampData]
   )

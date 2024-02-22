@@ -14,6 +14,7 @@ type BootcampAttributes = {
   info: string
   Cover: { data: SingleImageType }
   Lessons: BootcampLesson[]
+  payment_link: string
 }
 
 export type BootcampLesson = {

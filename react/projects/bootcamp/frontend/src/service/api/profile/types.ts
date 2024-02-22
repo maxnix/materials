@@ -36,3 +36,30 @@ export interface GetProfileResponse {
   bootcamps: Bootcamp[]
   courses: Course[]
 }
+
+export type GetUserChargesParams = {
+  email: string
+}
+
+export type GetChargesResponse = Charge[]
+
+export type Charge = {
+  id: string
+  amount: number
+  billing_details: {
+    email: string
+  }
+  payment_method_details: {
+    card: {
+      last4: string
+    }
+  }
+  created: number
+  status: "failed" | "succeeded"
+}
+
+export type UpdatePasswordRequest = {
+  currentPassword: string
+  password: string
+  passwordConfirmation: string
+}
