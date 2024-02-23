@@ -2,7 +2,6 @@
  * A set of functions called "actions" for `stripe`
  */
 
-import { EntityService } from "@strapi/strapi";
 import Stripe from "stripe";
 const unparsed = Symbol.for("unparsedBody");
 
@@ -43,12 +42,41 @@ export default {
     switch (event.type) {
       case "checkout.session.completed":
         const session = event.data.object;
-        console.log("Session", session);
-            const checkoutSession = await stripe.checkout.sessions.retrieve(session.id, {
+        const checkoutSession = await stripe.checkout.sessions.retrieve(
+          session.id,
+          {
             expand: ["line_items"],
+          }
+        );
+        const listItem = checkoutSession.line_items.data[0];
+        const productId = listItem.price.product;
+        const userMail = checkoutSession.customer_details.email;
+        try {
+          const user = await strapi.db.query("plugin::users-permissions.user").findOne({
+            where: { email: userMail },
+            select: ["id"],
           });
-          const listItem = checkoutSession.line_items.data[0];
-          const productId = listItem.price.product;
+          const product = await strapi.db.query("api::bootcamp.bootcamp").findOne({
+            where: {
+              Product: {
+                product_id: productId,
+              },
+            },
+            populate: ["Product", "entrants"],
+          });
+          await strapi.entityService.update("api::bootcamp.bootcamp", product.id, {
+            data: {
+              Iscrizioni: product.Iscrizioni + 1,
+              entrants: {
+                connect: [{id: user.id}],
+              }
+            }
+          })
+        } catch (error:any) {
+          
+          console.error(error?.details?.errors);
+        }
+
         break;
       default:
         console.log(`Unhandled event type ${event.type}`);
