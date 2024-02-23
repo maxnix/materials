@@ -1,11 +1,9 @@
 /**
- * bootcamp controller
+ * A set of functions called "actions" for `unsunscribe`
  */
 
-import { factories } from '@strapi/strapi'
-
-export default factories.createCoreController('api::bootcamp.bootcamp', ({strapi}) => ({
-    unsubscribe: async (ctx: any) => {
+export default {
+  unsubscribe: async (ctx: any) => {
     const { bootcampId, userId } = ctx.request.body;
     const { user } = ctx.state;
     console.log(user);
@@ -30,5 +28,4 @@ export default factories.createCoreController('api::bootcamp.bootcamp', ({strapi
       return ctx.badRequest(err);
     }
   }
-
-}));
+};

@@ -1,10 +1,19 @@
+import { useCallback, useEffect, useMemo } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Bootcamp } from "@/service/api/bootcamp/types"
 import { useAppSelector } from "@/service/redux/hooks"
+import { useUnsubscribeFromBootcampMutation } from "@/service/api/bootcamp"
 
 type BootcampInfoProps = Pick<
   Bootcamp["attributes"],
-  "Starts" | "ends" | "isRemote" | "seats" | "Iscrizioni" | "Product"
+  | "Starts"
+  | "ends"
+  | "isRemote"
+  | "seats"
+  | "Iscrizioni"
+  | "Product"
+  | "entrants"
 >
 
 const createDateString = (date: string) => {
@@ -24,11 +33,30 @@ export const BootcampInfo = ({
   ends,
   isRemote,
   seats,
-  Iscrizioni,
+  entrants,
   Product: { payment_link },
 }: BootcampInfoProps) => {
-  const { email } = useAppSelector((state) => state.profile)
-  const handlePayment = () => {
+  const { email, id: userId } = useAppSelector((state) => state.profile)
+  const params = useParams()
+  const navigation = useNavigate()
+  const { id: bootcampId } = params
+  const [unsubscribeFromBootcamp, { isSuccess }] =
+    useUnsubscribeFromBootcampMutation()
+  const isAvailable = useMemo(() => {
+    if (entrants) {
+      return checkAvailableSeats(seats, entrants.data.length) > 0
+    }
+    return true
+  }, [entrants, seats])
+
+  const isSubscribed = useMemo(() => {
+    if (entrants) {
+      return entrants.data.some((entrant) => entrant.attributes.email === email)
+    }
+    return false
+  }, [entrants, email])
+
+  const handlePayment = useCallback(() => {
     if (typeof window !== `undefined`) {
       let url = `${payment_link}`
       let encodedEmail = ``
@@ -38,7 +66,27 @@ export const BootcampInfo = ({
       }
       window.location.href = url
     }
-  }
+  }, [email, payment_link])
+
+  const unsubscribe = useCallback(() => {
+    if (typeof window !== `undefined`) {
+      if (bootcampId && userId) unsubscribeFromBootcamp({ bootcampId, userId })
+    }
+  }, [bootcampId, unsubscribeFromBootcamp, userId])
+
+  const handleClick = useCallback(() => {
+    if (isSubscribed) {
+      unsubscribe()
+    } else {
+      handlePayment()
+    }
+  }, [handlePayment, isSubscribed, unsubscribe])
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigation(0)
+    }
+  })
   return (
     <div className="relative">
       <div className="mt-24 max-w-[312px] ml-auto sticky top-20">
@@ -58,16 +106,21 @@ export const BootcampInfo = ({
           </div>
           <div className="flex items-center  justify-between gap-4">
             <p className="text-md text-gray-600">Avaibale</p>
-            {checkAvailableSeats(seats, Iscrizioni) > 0 ? (
+            {isAvailable ? (
               <p className="text-md font-medium">
-                {checkAvailableSeats(seats, Iscrizioni)}
+                {checkAvailableSeats(seats, entrants?.data.length ?? 0)}
               </p>
             ) : (
               <p className="text-md font-medium">Not available</p>
             )}
           </div>
-          {checkAvailableSeats(seats, Iscrizioni) > 0 ? (
-            <Button onClick={handlePayment}>Enroll now</Button>
+          {isAvailable ? (
+            <Button
+              variant={isSubscribed ? `destructive` : `default`}
+              onClick={handleClick}
+            >
+              {isSubscribed ? `Unsubscribe` : `Subscribe`}
+            </Button>
           ) : (
             <Button disabled variant="secondary">
               Not available

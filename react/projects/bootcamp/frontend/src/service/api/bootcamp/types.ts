@@ -15,6 +15,15 @@ type BootcampAttributes = {
   Cover: { data: SingleImageType }
   Lessons: BootcampLesson[]
   Product: BootcampStripeProduct
+  entrants: { data: BootcampEntrant[] } | null
+}
+
+type BootcampEntrant = {
+  id: number
+  attributes: {
+    id: number
+    email: string
+  }
 }
 
 export type BootcampStripeProduct = {

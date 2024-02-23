@@ -20,6 +20,17 @@ export const bootcampApi = createApi({
       query: (id) => `bootcamps/${id}?populate=*`,
       providesTags: [`Bootcamp`],
     }),
+    unsubscribeFromBootcamp: build.mutation<
+      void,
+      { bootcampId: string; userId: number }
+    >({
+      query: ({ bootcampId, userId }) => ({
+        url: `/bootcamps/unsubscribe`,
+        method: `POST`,
+        body: { userId, bootcampId },
+      }),
+      invalidatesTags: [`Bootcamp`],
+    }),
   }),
 })
 
@@ -27,4 +38,5 @@ export const {
   useGetBootcampListQuery,
   useGetBootcampQuery,
   useGetLast3BootcampsQuery,
+  useUnsubscribeFromBootcampMutation,
 } = bootcampApi
