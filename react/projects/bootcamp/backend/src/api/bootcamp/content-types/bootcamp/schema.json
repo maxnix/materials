@@ -67,8 +67,11 @@
     "info": {
       "type": "text"
     },
-    "payment_link": {
-      "type": "string"
+    "Product": {
+      "displayName": "Product",
+      "type": "component",
+      "repeatable": false,
+      "component": "stripe.product"
     }
   }
 }

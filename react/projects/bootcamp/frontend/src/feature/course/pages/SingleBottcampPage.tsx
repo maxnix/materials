@@ -27,7 +27,7 @@ export const SingleBootcampPage = () => {
       isRemote: bootcampData?.attributes.isRemote || false,
       seats: bootcampData?.attributes.seats || 0,
       Iscrizioni: bootcampData?.attributes.Iscrizioni || 0,
-      payment_link: bootcampData?.attributes.payment_link!,
+      Product: bootcampData?.attributes.Product!,
     }),
     [bootcampData]
   )

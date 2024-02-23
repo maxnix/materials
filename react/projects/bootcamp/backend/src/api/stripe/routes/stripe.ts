@@ -8,5 +8,13 @@ export default {
         policies: [],
       },
     },
+    {
+      method: "POST",
+      path: "/stripe/webhook",
+      handler: "stripe.listenToWebhook",
+      config: {
+        policies: [],
+      },
+    },
   ],
 };

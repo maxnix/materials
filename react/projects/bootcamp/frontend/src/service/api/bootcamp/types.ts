@@ -14,7 +14,13 @@ type BootcampAttributes = {
   info: string
   Cover: { data: SingleImageType }
   Lessons: BootcampLesson[]
+  Product: BootcampStripeProduct
+}
+
+export type BootcampStripeProduct = {
+  id: number
   payment_link: string
+  product_id: string
 }
 
 export type BootcampLesson = {

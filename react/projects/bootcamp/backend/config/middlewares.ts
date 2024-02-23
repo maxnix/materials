@@ -5,8 +5,7 @@ export default [
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
-  'strapi::body',
-  'strapi::session',
+  { name: "strapi::body", config: { includeUnparsed: true } }, // add this  'strapi::session',
   'strapi::favicon',
   'strapi::public',
 ];

@@ -4,7 +4,7 @@ import { useAppSelector } from "@/service/redux/hooks"
 
 type BootcampInfoProps = Pick<
   Bootcamp["attributes"],
-  "Starts" | "ends" | "isRemote" | "seats" | "Iscrizioni" | "payment_link"
+  "Starts" | "ends" | "isRemote" | "seats" | "Iscrizioni" | "Product"
 >
 
 const createDateString = (date: string) => {
@@ -25,12 +25,12 @@ export const BootcampInfo = ({
   isRemote,
   seats,
   Iscrizioni,
-  payment_link,
+  Product: { payment_link },
 }: BootcampInfoProps) => {
   const { email } = useAppSelector((state) => state.profile)
   const handlePayment = () => {
     if (typeof window !== `undefined`) {
-      let url = payment_link
+      let url = `${payment_link}`
       let encodedEmail = ``
       if (email) {
         encodedEmail = encodeURIComponent(email)

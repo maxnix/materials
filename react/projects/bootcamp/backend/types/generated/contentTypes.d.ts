@@ -394,7 +394,7 @@ export interface ApiBootcampBootcamp extends Schema.CollectionType {
     >;
     seats: Attribute.Integer & Attribute.DefaultTo<25>;
     info: Attribute.Text;
-    payment_link: Attribute.String;
+    Product: Attribute.Component<'stripe.product'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

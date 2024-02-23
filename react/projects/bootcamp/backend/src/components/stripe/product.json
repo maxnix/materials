@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_stripe_products",
+  "info": {
+    "displayName": "Product",
+    "icon": "archive"
+  },
+  "options": {},
+  "attributes": {
+    "payment_link": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string"
+    }
+  }
+}
