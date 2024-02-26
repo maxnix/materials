@@ -1,3 +1,3 @@
-import { DataFetching } from "./risultato/useEffect/DataFetching"
+import RefAsNode from "./risultato/useRef/RefAsNode"
 
-export const RisultatoBasiReact = () => <DataFetching />
+export const RisultatoBasiReact = () => <RefAsNode />
