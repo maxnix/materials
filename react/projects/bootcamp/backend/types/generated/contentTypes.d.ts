@@ -441,6 +441,7 @@ export interface ApiCourseCourse extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     cover: Attribute.Media;
+    Product: Attribute.Component<'stripe.product'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

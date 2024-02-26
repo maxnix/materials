@@ -52,31 +52,60 @@ export default {
         const productId = listItem.price.product;
         const userMail = checkoutSession.customer_details.email;
         try {
-          const user = await strapi.db.query("plugin::users-permissions.user").findOne({
-            where: { email: userMail },
-            select: ["id"],
-          });
-          const product = await strapi.db.query("api::bootcamp.bootcamp").findOne({
+          const user = await strapi.db
+            .query("plugin::users-permissions.user")
+            .findOne({
+              where: { email: userMail },
+              select: ["id"],
+            });
+          const bootcamp = await strapi.db
+            .query("api::bootcamp.bootcamp")
+            .findOne({
+              where: {
+                Product: {
+                  product_id: productId,
+                },
+              },
+              populate: ["Product", "entrants"],
+            });
+          if (bootcamp) {
+            await strapi.entityService.update(
+              "api::bootcamp.bootcamp",
+              bootcamp.id,
+              {
+                data: {
+                  Iscrizioni: bootcamp.Iscrizioni + 1,
+                  entrants: {
+                    connect: [{ id: user.id }],
+                  },
+                },
+              }
+            );
+            break;
+          }
+          const course = await strapi.db.query("api::course.course").findOne({
             where: {
               Product: {
                 product_id: productId,
               },
             },
-            populate: ["Product", "entrants"],
+            populate: ["Product", "students"],
           });
-          await strapi.entityService.update("api::bootcamp.bootcamp", product.id, {
-            data: {
-              Iscrizioni: product.Iscrizioni + 1,
-              entrants: {
-                connect: [{id: user.id}],
+          if (course)
+            await strapi.entityService.update(
+              "api::course.course",
+              course.id,
+              {
+                data: {
+                  students: {
+                    connect: [{ id: user.id }],
+                  },
+                },
               }
-            }
-          })
-        } catch (error:any) {
-          
+            );
+        } catch (error: any) {
           console.error(error?.details?.errors);
         }
-
         break;
       default:
         console.log(`Unhandled event type ${event.type}`);

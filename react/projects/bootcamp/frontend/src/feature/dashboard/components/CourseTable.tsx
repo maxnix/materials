@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { GenericTable } from "./GenericTable"
 import { useAppSelector } from "@/service/redux/hooks"
 import { SimplifiedProfile } from "@/service/api/profile/parser"
-import { Button } from "@/components/ui/button"
+import { TableSkeleton } from "./SkeletonTable"
 
 const columnsHelper = createColumnHelper<SimplifiedProfile["courses"][number]>()
 
@@ -54,15 +54,15 @@ const columns = [
 
 export const CourseTable = () => {
   const { courses } = useAppSelector((state) => state.profile)
+  if (!courses) return <TableSkeleton rows={3} />
   return (
     <div className="flex flex-col max-w-[1140px] mx-auto gap-4 w-full">
       <h2 className="text-xl font-regular">Corsi</h2>
       {courses && courses?.length > 0 ? (
         <GenericTable data={courses} columns={columns} />
       ) : (
-        <div className="w-full h-14 flex justify-between items-center bg-green-200 px-6 rounded-full">
+        <div className="w-full h-14 flex justify-between items-center bg-green-50 px-6 rounded-md">
           <p>Nessun corso trovato</p>
-          <Button size="sm">Aggiungi corso</Button>
         </div>
       )}
     </div>

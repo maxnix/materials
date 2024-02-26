@@ -8,8 +8,7 @@ import { Toaster } from "@/components/ui/toast"
 export const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <>
     <nav className="fixed top-0 right-0 w-full z-10">
-      <div className="flex flex-row justify-between items-center w-full h-16 px-8 bg-white">
-        <Link to="/app/dashboard"> Back Home</Link>
+      <div className="flex flex-row justify-between items-center w-full h-16">
         <MenuActions />
       </div>
     </nav>
@@ -21,7 +20,7 @@ export const PublicLayout = ({ children }: { children: React.ReactNode }) => (
 const PublicMenuActions = () => {
   const navigate = useNavigate()
   return (
-    <div className="flex flex-row justify-between items-center gap-4 w-full h-16 px-8 bg-white">
+    <div className="flex flex-row justify-end items-center gap-4 w-full h-16 px-8">
       <Button
         className="w-fit"
         variant="ghost"
@@ -44,16 +43,22 @@ const AuthMenuActions = () => {
 
   const navigate = useNavigate()
   return (
-    <div className="flex flex-row justify-between items-center gap-4 h-16  bg-white">
-      <Button className="w-fit" variant="ghost" onClick={handleClick}>
-        Logout
-      </Button>
-      <Button
-        className="w-fit"
-        onClick={() => navigate(`/app/profile/transactions`)}
-      >
-        Profilo
-      </Button>
+    <div className="flex flex-row justify-between w-full items-center gap-4 h-16 bg-white px-8">
+      <Link to="/app/dashboard">
+        <Button variant="link">Go to Dashboard</Button>
+      </Link>
+      <div className="flex flex-row justify-end items-center gap-4 h-16">
+        <Button
+          variant={`secondary`}
+          className="w-fit"
+          onClick={() => navigate(`/app/profile/transactions`)}
+        >
+          Profilo
+        </Button>
+        <Button className="w-fit" variant="ghost" onClick={handleClick}>
+          Logout
+        </Button>
+      </div>
     </div>
   )
 }

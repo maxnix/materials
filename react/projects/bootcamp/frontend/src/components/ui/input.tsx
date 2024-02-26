@@ -1,8 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import * as React from "react"
 
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Button } from "./button/button"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -26,7 +26,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false)
     return (
-      <div className="relative w-full">
+      <div className="relative w-full flex">
         <Input
           type={showPassword ? `text` : `password`}
           className={className}
@@ -34,14 +34,15 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
           autoComplete="current-password"
           {...props}
         />
-        <Button
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label="Toggle password visibility"
           onClick={(e: React.BaseSyntheticEvent) => {
             e.preventDefault()
             setShowPassword(!showPassword)
           }}
-          className="absolute right-0 top-0"
-          variant="ghost"
-          size="icon"
+          className="absolute right-0 top-0 h-10 w-10 inline-flex items-center justify-center "
         >
           {showPassword ? (
             <EyeOffIcon size={20} className="text-gray-400" />
@@ -49,7 +50,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
             <EyeIcon size={20} className="text-gray-400" />
           )}
           <span className="sr-only">Toggle password visibility</span>
-        </Button>
+        </div>
       </div>
     )
   }

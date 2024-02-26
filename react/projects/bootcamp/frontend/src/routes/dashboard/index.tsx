@@ -33,7 +33,7 @@ const useBootcampLoader = async ({
   )
   request.signal.onabort = () => promise.abort()
   const data = await promise
-  return { ...data }
+  return { ...data, refetch: promise.refetch }
 }
 
 export type BootcamLoaderType = {
@@ -49,7 +49,7 @@ export const dashboardRoutes = (isLogged?: boolean): RouteObject[] => [
       <DashboardLayout />
     ) : (
       <Navigate
-        to="/"
+        to="/auth/login"
         state={{
           from: `/app/`,
           message: `You need to be logged in to access this page`,
@@ -71,6 +71,7 @@ export const dashboardRoutes = (isLogged?: boolean): RouteObject[] => [
         path: `bootcamp/:id`,
         element: <SingleBootcampPage />,
         loader: useBootcampLoader,
+        shouldRevalidate: () => true,
       },
       {
         path: `profile`,

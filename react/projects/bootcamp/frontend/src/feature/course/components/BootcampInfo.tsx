@@ -21,6 +21,11 @@ const createDateString = (date: string) => {
   return `${d.toLocaleDateString()}`
 }
 
+const validateDate = (date: string) => {
+  const d = new Date(date)
+  return d.getTime() > Date.now()
+}
+
 const checkAvailableSeats = (seats: number | null, Iscrizioni: number) => {
   if (seats) {
     return seats - Iscrizioni
@@ -46,8 +51,8 @@ export const BootcampInfo = ({
     if (entrants) {
       return checkAvailableSeats(seats, entrants.data.length) > 0
     }
-    return true
-  }, [entrants, seats])
+    return validateDate(Starts)
+  }, [entrants, seats, Starts])
 
   const isSubscribed = useMemo(() => {
     if (entrants) {
