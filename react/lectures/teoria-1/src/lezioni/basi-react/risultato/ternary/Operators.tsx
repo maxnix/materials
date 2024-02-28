@@ -68,8 +68,8 @@ const OperatorValue = ({ operator }: OperatorProps) => {
       <div className="flex flex-col gap-3">
         <ul>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
-            {/* OR: {state === `or` || `Fallback`} */}
-            OR: {state || `Fallback`}
+            OR: {state === `or` || `Fallback`}
+            {/* OR: {state || `Fallback`} */}
           </li>
           <li className="p-2 bg-zinc-800 border-b border-zinc-700">
             AND: {state === `and` && `Show this`}
@@ -91,7 +91,7 @@ const Componente = () => <div>Mostra</div>
 const OperatorWithComponent = () => {
   const [show, setShow] = useState<boolean | null>(false)
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 p-4 bg-black">
       <h2 className="text-3xl">Show Hide Components</h2>
       <div className="flex flex-col gap-3">
         <ul className="flex">

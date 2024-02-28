@@ -4,12 +4,16 @@ const initialState = [`red`, `green`, `blue`, `yellow`, `purple`]
 const darkColors = [`black`, `gray`, `darkblue`, `darkgreen`]
 
 // export const ObjectState = () => {
-//   const [colors, setColors] = useState(initialState)
+//  const [colors, setColors] = useState(initialState)
 
-//   // Mitigare errore di duplicazione di colori
-//   // Riferimento alla lezione in cui usiamo if all'interno del setState
+// Mitigare errore di duplicazione di colori
+// Riferimento alla lezione in cui usiamo if all'interno del setState
+
+// Mutability degli array usati come state. Prima esempio inline (35)
 //   const handleDarkColors = () => {
+//      Prevents ID duplication
 //     if (colors.some((color) => darkColors.includes(color))) return
+
 //     setColors((prev) => [...prev, ...darkColors])
 //     // setColors((prev) => prev.concat(darkColors)) // Alternativa
 //   }
@@ -51,6 +55,7 @@ export const ObjectState = () => {
     spread: `spread`,
   })
 
+  // Oggetto con array (doppia mutabilità)
   const handleDarkColors = () => {
     if (!objColors.darkColors && objColors.spread)
       setObjColors((prev) => ({

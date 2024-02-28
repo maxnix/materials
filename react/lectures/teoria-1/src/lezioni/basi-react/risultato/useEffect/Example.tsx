@@ -25,7 +25,7 @@ export const Example = () => {
 
     return () => {
       console.log(`Ciao sono il cleanup del terzo useEffect`)
-      document.title = `Clean up`
+      if (document.title === `premuto er bottone`) document.title = `Clean up`
     }
   }, [title])
   return (

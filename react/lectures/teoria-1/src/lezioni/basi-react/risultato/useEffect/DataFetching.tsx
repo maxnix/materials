@@ -6,15 +6,16 @@ export const DataFetching = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (testError?: true) => {
     try {
+      if (testError) throw new Error(`Errore di test`)
       const res = await fetch(`${jsonplacholderUrl}/posts`)
       const data = (await res.json()) as Data[]
-      setLoading(false)
       setError(null)
       setPosts(data)
     } catch (err) {
-      setError(`Qualcosa è andato storto`)
+      if (err instanceof Error) setError(err.message as string)
+      setError(`Errore di rete`)
     } finally {
       setLoading(false)
     }

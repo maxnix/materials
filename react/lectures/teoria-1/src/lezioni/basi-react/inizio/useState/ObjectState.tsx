@@ -35,7 +35,6 @@ export const ObjectState = () => {
 //   const [objColors, setObjColors] = useState({
 //     colors: initialState,
 //     darkColors: false,
-//     spread: `spread`,
 //   })
 
 //   const handleDarkColors = () => {
@@ -60,7 +59,6 @@ export const ObjectState = () => {
 //         <button
 //           type="button"
 //           className="btn-primary bg-gray-600 hover:bg-gray-900"
-//           //   onClick={() => setColors([...colors, ...darkColors])}
 //           onClick={handleDarkColors}
 //         >
 //           Add dark colors

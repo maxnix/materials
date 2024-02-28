@@ -18,6 +18,7 @@ export const HooksRules = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* <Titolo />
+      // Fai vedere che gli state sono indipendenti
       <Titolo titoloIniziale="State indipendente" /> */}
       <Titolo titoloIniziale={globalTitle} onClick={onClick} />
       <Titolo titoloIniziale={globalTitle} onClick={onClick} />
@@ -36,6 +37,7 @@ const Titolo = ({ titoloIniziale, onClick }: TitloProps) => (
   //     const [titolo, setTitolo] = useState(`Hello, world!`)
   // }
 
+  //   useState accetta anche una funzione come argomento
   //   const [titolo, setTitolo] = useState(() => {
   //     if (titoloIniziale) {
   //       return titoloIniziale

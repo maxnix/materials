@@ -1,3 +1,3 @@
-import RefAsNode from "./risultato/useRef/RefAsNode"
+import { Operators } from "./risultato/ternary/Operators"
 
-export const RisultatoBasiReact = () => <RefAsNode />
+export const RisultatoBasiReact = () => <Operators />
