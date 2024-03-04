@@ -66,10 +66,14 @@ export const ObjectState = () => {
   }
 
   const removeColor = (index: number) => {
-    setObjColors((prev) => ({
-      ...prev,
-      colors: prev.colors.filter((_, i) => i !== index),
-    }))
+    setObjColors((prevColors) => {
+      const newColors = prevColors.colors.filter((_, i) => i !== index)
+      return {
+        ...prevColors,
+        colors: newColors,
+        darkColors: newColors.some((color) => darkColors.includes(color)),
+      }
+    })
   }
 
   //   const resetColors = () => {
