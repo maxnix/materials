@@ -1,3 +1,3 @@
-import { PropsDrilling } from "./risultato/PropsDrilling"
+import { ArticleWithContext } from "./risultato/useContext/Article"
 
-export const RisultatoConcettiAvanzati = () => <PropsDrilling />
+export const RisultatoConcettiAvanzati = () => <ArticleWithContext />
