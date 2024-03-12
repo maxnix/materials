@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line no-unused-vars
-// import { PrimoComponente } from "./lezioni/introduzione/inizio"
-import { RisultatoConcettiAvanzati } from "./lezioni/react-advanced/Risultato"
+import { InizioConcettiAvanzati } from "./lezioni/react-advanced/Inizio"
 
-const App = () => <RisultatoConcettiAvanzati />
+const App = () => <InizioConcettiAvanzati />
 
 export default App
