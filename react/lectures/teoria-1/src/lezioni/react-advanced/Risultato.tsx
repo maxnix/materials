@@ -1,3 +1,4 @@
-import { ArticleWithContext } from "./risultato/useContext/Article"
+import { Component } from "./risultato/customHooks/Component"
+import CallbackMemo from "./risultato/optimization/CallbackMemo"
 
-export const RisultatoConcettiAvanzati = () => <ArticleWithContext />
+export const RisultatoConcettiAvanzati = () => <CallbackMemo />
