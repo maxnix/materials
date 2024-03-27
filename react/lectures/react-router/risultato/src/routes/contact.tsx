@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 import { useMemo, useState } from "react"
 import {
   Contact as ContactType,
@@ -8,6 +8,10 @@ import {
 
 export const Contact = () => {
   const { contactId } = useParams()
+
+  const [searchParamsValue] = useSearchParams()
+  const fav = searchParamsValue.get(`favorite`)
+  console.log(fav)
   const contact = useMemo(
     () =>
       contactsArray.find((c) => c.id === Number(contactId)) || defaultContact,
@@ -53,8 +57,10 @@ export const Contact = () => {
 const Favorite = ({ singleContact }: { singleContact: ContactType }) => {
   // yes, this is a `let` for later
   const [favorite, setFavorite] = useState(singleContact.favorite)
+  const [, setSearchParamsValue] = useSearchParams()
 
   const changeFavorite = () => {
+    setSearchParamsValue(`favorite=${singleContact.id}`)
     setFavorite(!favorite)
   }
   return (
