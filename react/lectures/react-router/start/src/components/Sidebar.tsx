@@ -7,12 +7,12 @@ export const Sidebar = () => (
       <h6>My Contacts</h6>
       <nav className="mt-4">
         <ul className="space-y-4">
-          <li className="nav-item">
-            <a href={`/contacts/1`}>Your Name</a>
-          </li>
-          <li className="nav-item">
-            <a href={`/contacts/2`}>Your Friend</a>
-          </li>
+          <a href={`/contacts/1`}>
+            <li className="nav-item">Your Name</li>
+          </a>
+          <a href={`/contacts/2`}>
+            <li className="nav-item">Another Name</li>
+          </a>
         </ul>
       </nav>
     </div>
