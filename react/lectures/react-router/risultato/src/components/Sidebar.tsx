@@ -1,3 +1,6 @@
+import { NavLink } from "react-router-dom"
+import { contactsArray } from "../constants/contacts"
+
 export const Sidebar = () => (
   <div
     id="sidebar"
@@ -7,12 +10,20 @@ export const Sidebar = () => (
       <h6>My Contacts</h6>
       <nav className="mt-4">
         <ul className="flex flex-col gap-4">
-          <a href={`/contacts/1`}>
-            <li className="nav-item">Your Name</li>
-          </a>
-          <a href={`/contacts/2`}>
-            <li className="nav-item">Your Friend</li>
-          </a>
+          {contactsArray.map((contact) => (
+            // <Link key={contact.id} to={`/contacts/${contact.id}`}>
+            //   <li className="nav-item">
+            //     {contact.first} {contact.last}
+            //   </li>
+            // </Link>
+            <NavLink key={contact.id} to={`/contacts/${contact.id}`}>
+              {({ isActive }) => (
+                <li className={`nav-item ${isActive ? `nav-item-active` : ``}`}>
+                  {contact.first} {contact.last}
+                </li>
+              )}
+            </NavLink>
+          ))}
         </ul>
       </nav>
     </div>
