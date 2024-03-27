@@ -6,13 +6,13 @@ export const Sidebar = () => (
     <div className="container py-8">
       <h6>My Contacts</h6>
       <nav className="mt-4">
-        <ul className="space-y-4">
-          <li className="nav-item">
-            <a href={`/contacts/1`}>Your Name</a>
-          </li>
-          <li className="nav-item">
-            <a href={`/contacts/2`}>Your Friend</a>
-          </li>
+        <ul className="flex flex-col gap-4">
+          <a href={`/contacts/1`}>
+            <li className="nav-item">Your Name</li>
+          </a>
+          <a href={`/contacts/2`}>
+            <li className="nav-item">Your Friend</li>
+          </a>
         </ul>
       </nav>
     </div>
