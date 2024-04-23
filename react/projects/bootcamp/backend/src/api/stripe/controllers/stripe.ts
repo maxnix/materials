@@ -76,7 +76,7 @@ export default {
                 data: {
                   Iscrizioni: bootcamp.Iscrizioni + 1,
                   entrants: {
-                    connect: [{ id: user.id }],
+                    connect: [{ id: user.id , position: bootcamp.Iscrizioni + 1}],
                   },
                 },
               }
@@ -98,7 +98,7 @@ export default {
               {
                 data: {
                   students: {
-                    connect: [{ id: user.id }],
+                    connect: [{ id: user.id, position: course.students.length + 1}],
                   },
                 },
               }
