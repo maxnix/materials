@@ -1,10 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
-import { strapiAuthFetchQuery } from "../utils/strapiAuthFetchQuery"
+import { strapiBaseFetchQuery } from "../utils"
 import { Course, GetCourseResponse } from "./types"
 
 export const courseApi = createApi({
   reducerPath: `course`,
-  baseQuery: strapiAuthFetchQuery,
+  baseQuery: strapiBaseFetchQuery,
   tagTypes: [`Course`],
   endpoints: (build) => ({
     getCourseList: build.query<GetCourseResponse, void>({

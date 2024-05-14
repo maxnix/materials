@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Bootcamp, Course, GetProfileResponse } from "./types"
 
-type SimplifiedCourse = Omit<
+type SimpleCourse = Omit<
   Course,
   "publishedAt" | "createdAt" | "updatedAt" | "weeks" | "Description"
 >
 
-export const simplifyCourse = (course: Course): SimplifiedCourse => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const simplifyCourse = (course: Course): SimpleCourse => {
   const { publishedAt, createdAt, updatedAt, weeks, Description, ...rest } =
     course
   return rest
 }
 
-type SimplifiedBootcamp = Omit<
+type SimpleBootcamp = Omit<
   Bootcamp,
   | "publishedAt"
   | "Iscrizioni"
@@ -23,8 +22,7 @@ type SimplifiedBootcamp = Omit<
   | "Description"
 >
 
-export const simplifyBootcamp = (bootcamp: Bootcamp): SimplifiedBootcamp => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const simplifyBootcamp = (bootcamp: Bootcamp): SimpleBootcamp => {
   const {
     publishedAt,
     Iscrizioni,
@@ -37,10 +35,10 @@ export const simplifyBootcamp = (bootcamp: Bootcamp): SimplifiedBootcamp => {
   return rest
 }
 
-export const simplifyProfile = (profile: GetProfileResponse) => ({
+export const simplifyCourseParser = (profile: GetProfileResponse) => ({
   ...profile,
-  courses: profile.courses?.map(simplifyCourse) || null,
-  bootcamps: profile.bootcamps?.map(simplifyBootcamp) || null,
+  bootcamps: profile?.bootcamps?.map(simplifyBootcamp) ?? [],
+  courses: profile?.courses?.map(simplifyCourse) ?? [],
 })
 
-export type SimplifiedProfile = ReturnType<typeof simplifyProfile>
+export type SimplifiedProfile = ReturnType<typeof simplifyCourseParser>

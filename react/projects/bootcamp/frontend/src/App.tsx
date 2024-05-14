@@ -1,12 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { routes } from "./routes"
-import { useAppSelector } from "./service/redux/hooks"
 import { AppLoading } from "./feature/home/components/AppLoading"
+import { useAppSelector } from "./service/redux/hooks"
 
 const App = () => {
   const { token } = useAppSelector((state) => state.auth)
-  const isLoggedIn = !!token
-  const router = createBrowserRouter(routes(isLoggedIn))
+  const router = createBrowserRouter(routes(!!token))
 
   return <RouterProvider router={router} fallbackElement={<AppLoading />} />
 }

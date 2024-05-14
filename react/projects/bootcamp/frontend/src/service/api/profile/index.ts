@@ -1,26 +1,24 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
-import { strapiAuthFetchQuery } from "../utils/strapiAuthFetchQuery"
+import { strapiBaseFetchQuery } from "../utils"
 import {
   GetChargesResponse,
   GetProfileResponse,
   GetUserChargesParams,
   UpdatePasswordRequest,
 } from "./types"
-import { SimplifiedProfile, simplifyProfile } from "./parser"
+import { simplifyCourseParser, SimplifiedProfile } from "./parser"
 import { ResetPasswordResponse } from "../auth/types"
-
-const baseQuery = strapiAuthFetchQuery
 
 export const profileApi = createApi({
   reducerPath: `profileApi`,
-  baseQuery,
+  baseQuery: strapiBaseFetchQuery,
   tagTypes: [`Profile`],
   endpoints: (builder) => ({
     getProfile: builder.query<SimplifiedProfile, void>({
       query: () => `/users/me?populate=*`,
-      providesTags: [`Profile`],
       transformResponse: (response: GetProfileResponse) =>
-        simplifyProfile(response),
+        simplifyCourseParser(response),
+      providesTags: [`Profile`],
     }),
     getUserPayments: builder.query<GetChargesResponse, GetUserChargesParams>({
       query: ({ email }) =>
@@ -40,7 +38,6 @@ export const profileApi = createApi({
 })
 
 export const {
-  useGetProfileQuery,
   useLazyGetProfileQuery,
   useGetUserPaymentsQuery,
   useUpdatePasswordMutation,
