@@ -8,8 +8,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { useUpdatePasswordMutation } from "@/service/api/profile"
-import { useAppDispatch } from "@/service/redux/hooks"
 import {
   FormField,
   FormItem,
@@ -20,6 +18,8 @@ import {
   Form,
 } from "@/components/ui/form"
 import { PasswordInput } from "@/components/ui/input"
+import { useUpdatePasswordMutation } from "@/service/api/profile"
+import { useAppDispatch } from "@/service/redux/hooks"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
 import { setToken, setUsername } from "@/service/redux/slice/auth"
 import { SignupErrorResponse } from "@/service/api/auth/types"
@@ -73,25 +73,25 @@ export const ProfileInfoTab = () => {
       })
         .unwrap()
         .then((res) => {
-          if (res.jwt) {
-            dispatch(setToken(res.jwt))
-          }
-          if (res.user) {
-            dispatch(setUsername(res.user.id))
-          }
+          if (res.jwt) dispatch(setToken(res.jwt))
+          if (res.user) dispatch(setUsername(res.user.id))
+          toast({
+            title: `Password Salvata`,
+            variant: `success`,
+          })
         })
         .catch((err: SignupErrorResponse) => {
           toast({
-            title: `Something went wrong`,
-            variant: `destructive`,
+            title: `Qualcosa è andato storto`,
             description: err.data.error.message,
+            variant: `destructive`,
           })
         })
         .finally(() => {
           form.reset()
         })
     },
-    [resetPassword, toast, dispatch, form]
+    [dispatch, form, resetPassword, toast]
   )
   return (
     <TabsContent value="info">
@@ -100,7 +100,10 @@ export const ProfileInfoTab = () => {
         <SheetDescription>Crea una nuova password</SheetDescription>
       </SheetHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="grid gap-4 mt-8"
+        >
           <FormField
             name="currentPassword"
             control={form.control}
@@ -120,7 +123,7 @@ export const ProfileInfoTab = () => {
             control={form.control}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel htmlFor="password">New Password</FormLabel>
                 <PasswordInput {...field} placeholder="********" />
                 <FormDescription className="text-xs text-gray-500">
                   Min 12 characters, 1 uppercase, 1 lowercase, 1 number, 1

@@ -20,7 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form/form"
 import { Input } from "@/components/ui/input"
-import { useForgotPasswordMutation } from "../../../service/api/auth"
+import { useForgotPasswordMutation } from "@/service/api/auth"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
 
 const formSchema = z.object({
@@ -34,8 +34,8 @@ const defaultValues = {
 }
 
 export const ForgotSheet = () => {
-  const [forgotPassword] = useForgotPasswordMutation()
   const { toast } = useToast()
+  const [forgotPassword] = useForgotPasswordMutation()
   const navigate = useNavigate()
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -65,7 +65,7 @@ export const ForgotSheet = () => {
           form.reset()
         })
     },
-    [form, forgotPassword, toast]
+    [forgotPassword, form, toast]
   )
 
   return (

@@ -13,13 +13,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
-import { useResetPasswordMutation } from "../../../service/api/auth"
-import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { useAppDispatch } from "@/service/redux/hooks"
-import { setToken, setUsername } from "../../../service/redux/slice/auth"
 import { UnstyledLayout } from "@/feature/layout/UnstyledLayout"
-import { SignupErrorResponse } from "../../../service/api/auth/types"
 import { Button } from "@/components/ui/button/button"
+import { useResetPasswordMutation } from "@/service/api/auth"
+import { useAppDispatch } from "@/service/redux/hooks"
+import { setToken, setUsername } from "@/service/redux/slice/auth"
+import { SignupErrorResponse } from "@/service/api/auth/types"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
 
 const formSchema = z
   .object({
@@ -51,9 +51,9 @@ const formDefaultValues = {
 type FormValues = z.infer<typeof formSchema>
 
 export const ResetPassword = () => {
+  const { toast } = useToast()
   const [resetPassword, { isSuccess }] = useResetPasswordMutation()
   const dispatch = useAppDispatch()
-  const { toast } = useToast()
   const [getParams] = useSearchParams()
   const code = getParams.get(`code`)
   const form = useForm<FormValues>({
@@ -75,7 +75,7 @@ export const ResetPassword = () => {
           if (res.jwt) {
             dispatch(setToken(res.jwt))
           }
-          if (res.user) {
+          if (res.user.id) {
             dispatch(setUsername(res.user.id))
           }
         })
@@ -90,9 +90,9 @@ export const ResetPassword = () => {
           form.reset()
         })
     },
-    [code, resetPassword, toast, dispatch, form]
+    [code, dispatch, resetPassword, toast, form]
   )
-  if (!isSuccess) {
+  if (isSuccess) {
     return (
       <div className="flex justify-center h-screen items-center">
         <div className="flex flex-col justify-center items-center gap-4 p-4  border border-gray-200 rounded-sm max-w-[468px]">
