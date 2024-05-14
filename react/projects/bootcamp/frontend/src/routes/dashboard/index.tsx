@@ -5,10 +5,10 @@ import { courseApi } from "@/service/api/course"
 import { bootcampApi } from "@/service/api/bootcamp"
 import { SingleCoursePage } from "@/feature/course/pages/SingleCoursePage"
 import { store } from "@/service/redux/store"
-import { SingleBootcampPage } from "@/feature/course/pages/SingleBottcampPage"
-import { ProfileSheet } from "@/feature/profile/components/ProfileSheet"
 import { TransactionTab } from "@/feature/profile/components/TransactionTab"
 import { ProfileInfoTab } from "@/feature/profile/components/InfoTab"
+import { BootcampRoute } from "./BootcampRoute"
+import { ProfileRoute } from "./ProfileRoute"
 
 const useCourseLoader = async ({
   params,
@@ -36,7 +36,7 @@ const useBootcampLoader = async ({
   return { ...data, refetch: promise.refetch }
 }
 
-export type BootcamLoaderType = {
+export type BootcampLoaderData = {
   data: Awaited<ReturnType<typeof useBootcampLoader>>
 }
 
@@ -69,13 +69,13 @@ export const dashboardRoutes = (isLogged?: boolean): RouteObject[] => [
       },
       {
         path: `bootcamp/:id`,
-        element: <SingleBootcampPage />,
+        element: <BootcampRoute />,
         loader: useBootcampLoader,
         shouldRevalidate: () => true,
       },
       {
         path: `profile`,
-        element: <ProfileSheet />,
+        element: <ProfileRoute />,
         children: [
           {
             path: `transactions`,

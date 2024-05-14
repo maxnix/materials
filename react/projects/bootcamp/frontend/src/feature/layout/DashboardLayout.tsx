@@ -15,7 +15,7 @@ export const DashboardLayout = () => {
   }, [navigate, isAppRoutes, getProfile])
   return (
     <PublicLayout>
-      <div className="w-full h-16 nac-spacer" />
+      <div className="w-full h-16 nav-spacer" />
       <Outlet />
     </PublicLayout>
   )
