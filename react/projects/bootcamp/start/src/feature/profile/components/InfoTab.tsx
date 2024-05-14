@@ -18,11 +18,6 @@ import {
   Form,
 } from "@/components/ui/form"
 import { PasswordInput } from "@/components/ui/input"
-import { useUpdatePasswordMutation } from "@/service/api/profile"
-import { useAppDispatch } from "@/service/redux/hooks"
-import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { setToken, setUsername } from "@/service/redux/slice/auth"
-import { SignupErrorResponse } from "@/service/api/auth/types"
 
 const formSchema = z
   .object({
@@ -56,43 +51,14 @@ const formDefaultValues = {
 type FormValues = z.infer<typeof formSchema>
 
 export const ProfileInfoTab = () => {
-  const [resetPassword] = useUpdatePasswordMutation()
-  const dispatch = useAppDispatch()
-  const { toast } = useToast()
   const form = useForm<FormValues>({
     defaultValues: formDefaultValues,
     resolver: zodResolver(formSchema),
     mode: `onTouched`,
   })
-  const onSubmit = useCallback(
-    (data: FormValues) => {
-      resetPassword({
-        currentPassword: data.currentPassword,
-        password: data.password,
-        passwordConfirmation: data.confirmPassword,
-      })
-        .unwrap()
-        .then((res) => {
-          if (res.jwt) dispatch(setToken(res.jwt))
-          if (res.user) dispatch(setUsername(res.user.id))
-          toast({
-            title: `Password Salvata`,
-            variant: `success`,
-          })
-        })
-        .catch((err: SignupErrorResponse) => {
-          toast({
-            title: `Qualcosa è andato storto`,
-            description: err.data.error.message,
-            variant: `destructive`,
-          })
-        })
-        .finally(() => {
-          form.reset()
-        })
-    },
-    [dispatch, form, resetPassword, toast]
-  )
+  const onSubmit = useCallback((data: FormValues) => {
+    console.log(data)
+  }, [])
   return (
     <TabsContent value="info">
       <SheetHeader>
@@ -100,10 +66,7 @@ export const ProfileInfoTab = () => {
         <SheetDescription>Crea una nuova password</SheetDescription>
       </SheetHeader>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-4 mt-8"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
           <FormField
             name="currentPassword"
             control={form.control}
@@ -123,7 +86,7 @@ export const ProfileInfoTab = () => {
             control={form.control}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel htmlFor="password">New Password</FormLabel>
+                <FormLabel htmlFor="password">Password</FormLabel>
                 <PasswordInput {...field} placeholder="********" />
                 <FormDescription className="text-xs text-gray-500">
                   Min 12 characters, 1 uppercase, 1 lowercase, 1 number, 1

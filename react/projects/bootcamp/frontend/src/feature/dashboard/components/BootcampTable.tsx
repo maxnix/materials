@@ -44,7 +44,7 @@ const columns = [
 ]
 
 export const BootcampTable = () => {
-  const { bootcamps } = useAppSelector((state) => state.profile)
+  const { bootcamps } = useAppSelector((state) => state.profile.profile) || {}
   if (!bootcamps) return <TableSkeleton rows={3} />
   return (
     <div className="flex flex-col max-w-[1140px] mx-auto gap-4 w-full">

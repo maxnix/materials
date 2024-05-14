@@ -1,82 +1,68 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
+import { strapiBaseFetchQuery } from "../utils"
 import {
-  AdminLoginCredentials,
-  Credentials,
   ForgotPasswordRequest,
   LoginCredentials,
   ResetPasswordRequest,
   ResetPasswordResponse,
+  SignupCredentials,
   SignupResponse,
-} from "../auth/types"
-import { strapiAuthFetchQuery } from "../utils/strapiAuthFetchQuery"
+} from "./types"
 
-const baseQuery = strapiAuthFetchQuery
-
-const publicRegistrationUrl = `/auth/local`
-const adminRegistrationUrl = `/admin/auth/local`
-const publicBaseUrl = `/auth`
+const PUBLIC_AUTH_URL = `auth/local`
 
 export const authApi = createApi({
   reducerPath: `authApi`,
-  baseQuery,
+  baseQuery: strapiBaseFetchQuery,
   tagTypes: [`Auth`],
   endpoints: (builder) => ({
+    register: builder.mutation<SignupResponse, SignupCredentials>({
+      query: (data) => ({
+        url: `${PUBLIC_AUTH_URL}/register`,
+        method: `POST`,
+        body: data,
+      }),
+      invalidatesTags: [`Auth`],
+    }),
     login: builder.mutation<SignupResponse, LoginCredentials>({
-      query: (credentials) => ({
-        url: `${publicRegistrationUrl}`,
+      query: (data) => ({
+        url: `${PUBLIC_AUTH_URL}`,
         method: `POST`,
-        body: credentials,
-      }),
-      invalidatesTags: [`Auth`],
-    }),
-    adminLogin: builder.mutation<SignupResponse, AdminLoginCredentials>({
-      query: (credentials) => ({
-        url: `${adminRegistrationUrl}/login`,
-        method: `POST`,
-        body: credentials,
-      }),
-      invalidatesTags: [`Auth`],
-    }),
-    register: builder.mutation<SignupResponse, Credentials>({
-      query: (credentials) => ({
-        url: `${publicRegistrationUrl}/register`,
-        method: `POST`,
-        body: credentials,
+        body: data,
       }),
       invalidatesTags: [`Auth`],
     }),
     forgotPassword: builder.mutation<void, ForgotPasswordRequest>({
-      query: (body) => ({
-        url: `${publicBaseUrl}/forgot-password`,
+      query: (data) => ({
+        url: `auth/forgot-password`,
         method: `POST`,
-        body,
+        body: data,
       }),
     }),
     resendEmailVerification: builder.mutation<void, ForgotPasswordRequest>({
-      query: (body) => ({
-        url: `${publicBaseUrl}/send-email-confirmation`,
+      query: (data) => ({
+        url: `auth/send-email-confirmation`,
         method: `POST`,
-        body,
+        body: data,
       }),
     }),
     resetPassword: builder.mutation<
       ResetPasswordResponse,
       ResetPasswordRequest
     >({
-      query: (body) => ({
-        url: `${publicBaseUrl}/reset-password`,
+      query: (data) => ({
+        url: `auth/reset-password`,
         method: `POST`,
-        body,
+        body: data,
       }),
     }),
   }),
 })
 
 export const {
-  useLoginMutation,
-  useAdminLoginMutation,
   useRegisterMutation,
+  useLoginMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation,
   useResendEmailVerificationMutation,
+  useResetPasswordMutation,
 } = authApi

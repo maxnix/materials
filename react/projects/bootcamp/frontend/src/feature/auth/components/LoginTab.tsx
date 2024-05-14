@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -19,21 +19,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
+import { useToast } from "@/components/ui/toast/hook/use-toast"
 import {
   useLoginMutation,
   useResendEmailVerificationMutation,
-} from "../../../service/api/auth"
-import { setToken } from "../../../service/redux/slice/auth"
-import { useAppDispatch } from "@/service/redux/hooks"
-import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { SignupErrorResponse } from "../../../service/api/auth/types"
+} from "@/service/api/auth"
+import { SignupErrorResponse } from "@/service/api/auth/types"
 import { ToastAction } from "@/components/ui/toast"
+import { useAppDispatch } from "@/service/redux/hooks"
+import { setToken } from "@/service/redux/slice/auth"
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(8, `Password Should Have at least 8 characters`)
+    .min(12, `Password Should Have at least 12 characters`)
     .max(100),
 })
 
@@ -45,12 +45,10 @@ const formDefaultValues = {
 type FormValues = z.infer<typeof formSchema>
 
 export const LoginTabs = () => {
-  const [resendConfirm] = useResendEmailVerificationMutation()
-  const { toast } = useToast()
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-
-  const [login, { data, isLoading }] = useLoginMutation()
+  const { toast } = useToast()
+  const [login, { isLoading, data }] = useLoginMutation()
+  const [resendMail] = useResendEmailVerificationMutation()
   const form = useForm<FormValues>({
     defaultValues: formDefaultValues,
     resolver: zodResolver(formSchema),
@@ -64,33 +62,31 @@ export const LoginTabs = () => {
         password: values.password,
       })
         .unwrap()
-        .then(() => {
-          form.reset()
-        })
+        .then(() => form.reset())
         .catch(({ data: { error } }: SignupErrorResponse) => {
-          const isUncorfimed =
-            error.message === `Your account email is not confirmed`
+          const isUnconfirmed =
+            error?.message === `Your account email is not confirmed`
           toast({
             title: `Login Failed`,
-            description: error.message,
+            description: error?.message || `Errore Generico`,
             duration: 5000,
-            variant: isUncorfimed ? `info` : `destructive`,
-            action: isUncorfimed ? (
+            variant: isUnconfirmed ? `info` : `destructive`,
+            action: isUnconfirmed ? (
               <ToastAction
-                onClick={() => {
-                  resendConfirm({ email: values.email })
+                altText="Resend Email"
+                className="hover:bg-slate-50 hover:text-slate-900"
+                onClick={() =>
+                  resendMail({ email: values.email })
                     .unwrap()
                     .then(() => {
                       toast({
                         title: `Email Sent`,
-                        description: `Email has been sent`,
+                        description: `Check your inbox for the confirmation email`,
                         duration: 5000,
                         variant: `success`,
                       })
                     })
-                }}
-                altText="Resend"
-                className="hover:bg-slate-50 hover:text-black"
+                }
               >
                 Resend
               </ToastAction>
@@ -98,22 +94,20 @@ export const LoginTabs = () => {
           })
         })
     },
-    [form, login, toast, resendConfirm]
+    [form, login, toast, resendMail]
   )
 
   useEffect(() => {
-    if (isLoading) return
-    if (data?.jwt) {
+    if (!isLoading && data) {
       dispatch(setToken(data.jwt))
       toast({
-        title: `Login Success`,
-        description: `You have successfully logged in`,
+        title: `Login Successful`,
+        description: `Welcome back!`,
         duration: 5000,
         variant: `success`,
       })
-      navigate(`/app/dashboard`)
     }
-  }, [data, isLoading, dispatch, navigate, toast])
+  }, [toast, isLoading, data, dispatch])
 
   return (
     <TabsContent value="login">

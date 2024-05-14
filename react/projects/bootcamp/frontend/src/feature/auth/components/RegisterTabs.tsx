@@ -21,9 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form/form"
-import { useRegisterMutation } from "../../../service/api/auth"
+import { useRegisterMutation } from "@/service/api/auth"
 import { useToast } from "@/components/ui/toast/hook/use-toast"
-import { SignupErrorResponse } from "../../../service/api/auth/types"
+import { SignupErrorResponse } from "@/service/api/auth/types"
 
 const formSchema = z
   .object({
@@ -79,8 +79,8 @@ const SuccessFullyRegisterd = () => (
 )
 
 export const RegisterTab = () => {
-  const [register, { isSuccess }] = useRegisterMutation()
   const { toast } = useToast()
+  const [registerUser, { isSuccess }] = useRegisterMutation()
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: formDefaultValues,
@@ -89,29 +89,29 @@ export const RegisterTab = () => {
 
   const onSubmit = useCallback(
     (values: FormValues) => {
-      register({
+      registerUser({
         username: values.username,
         email: values.email,
         password: values.password,
       })
         .unwrap()
         .then(() => {
-          form.reset()
+          form.reset(formDefaultValues)
           toast({
-            title: `Successfully Registered`,
+            title: `Successfully registered`,
             description: `Verify your email address to complete the registration process`,
             variant: `success`,
           })
         })
         .catch((err: SignupErrorResponse) => {
           toast({
-            title: `Something went wrong`,
-            description: JSON.stringify(err.data.error.message),
+            title: `Registration failed`,
+            description: err.data.error.message,
             variant: `destructive`,
           })
         })
     },
-    [form, register, toast]
+    [registerUser, form, toast]
   )
   if (form.formState.isSubmitSuccessful && isSuccess)
     return <SuccessFullyRegisterd />
@@ -134,7 +134,7 @@ export const RegisterTab = () => {
             control={form.control}
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel htmlFor="username">Name</FormLabel>
+                <FormLabel htmlFor="username">Username</FormLabel>
                 <Input placeholder="David Parenzo" {...field} />
                 <FormDescription className="text-xs text-gray-500">
                   Enter your full name

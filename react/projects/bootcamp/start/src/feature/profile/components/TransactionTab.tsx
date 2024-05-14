@@ -6,13 +6,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Charge } from "@/service/api/profile/types"
-import { useGetUserPaymentsQuery } from "@/service/api/profile"
-import { useAppSelector } from "@/service/redux/hooks"
 
 export const TransactionTab = () => {
-  const { email } = useAppSelector((state) => state.profile.profile) || {}
-  const { data, isLoading } = useGetUserPaymentsQuery({ email: email! })
+  const data: any[] = []
+  const isLoading = true
   return (
     <TabsContent value="transactions">
       <SheetHeader>
@@ -32,7 +29,8 @@ export const TransactionTab = () => {
           </>
         ) : (
           data?.map((transaction) => (
-            <Transaction key={transaction.id} {...transaction} />
+            // <Transaction key={transaction.id} {...transaction} />
+            <div>transazione</div>
           ))
         )}
       </ScrollArea>
@@ -40,33 +38,33 @@ export const TransactionTab = () => {
   )
 }
 
-const Transaction = ({
-  amount,
-  created,
-  status,
-  payment_method_details,
-}: Charge) => (
-  <div
-    className={`flex justify-between items-center p-2 border-b border-gray-200 dark:border-gray-800 ${status === `succeeded` ? `bg-emerald-50` : `bg-red-50`}`}
-  >
-    <div>
-      <h4 className="font-semibold text-sm">
-        **{payment_method_details.card.last4}
-      </h4>
-      <p className="text-xs text-gray-500 dark:text-gray-400">
-        {new Date(created).toDateString()}
-      </p>
-    </div>
-    <div className="flex items-center gap-2">
-      <p className="font-semibold ">{(amount / 100).toFixed(2)}</p>
-      <div
-        className={`w-2 h-2 rounded-full ${
-          status === `succeeded` ? `bg-green-500` : `bg-red-500`
-        }`}
-      />
-    </div>
-  </div>
-)
+// const Transaction = ({
+//   amount,
+//   created,
+//   status,
+//   payment_method_details,
+// }: Charge) => (
+//   <div
+//     className={`flex justify-between items-center p-2 border-b border-gray-200 dark:border-gray-800 ${status === `succeeded` ? `bg-emerald-50` : `bg-red-50`}`}
+//   >
+//     <div>
+//       <h4 className="font-semibold text-sm">
+//         **{payment_method_details.card.last4}
+//       </h4>
+//       <p className="text-xs text-gray-500 dark:text-gray-400">
+//         {new Date(created).toDateString()}
+//       </p>
+//     </div>
+//     <div className="flex items-center gap-2">
+//       <p className="font-semibold ">{(amount / 100).toFixed(2)}</p>
+//       <div
+//         className={`w-2 h-2 rounded-full ${
+//           status === `succeeded` ? `bg-green-500` : `bg-red-500`
+//         }`}
+//       />
+//     </div>
+//   </div>
+// )
 
 const SkeletonTransaction = () => (
   <div className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-800">

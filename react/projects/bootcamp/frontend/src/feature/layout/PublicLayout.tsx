@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useCallback } from "react"
 import { Button } from "@/components/ui/button/button"
-import { useAppDispatch, useAppSelector } from "@/service/redux/hooks"
-import { logout } from "../../service/redux/slice/auth"
 import { Toaster } from "@/components/ui/toast"
+import { useAppDispatch, useAppSelector } from "@/service/redux/hooks"
+import { logout } from "@/service/redux/slice/auth"
 
 export const PublicLayout = ({ children }: { children: React.ReactNode }) => (
   <>
@@ -37,10 +37,7 @@ const PublicMenuActions = () => {
 
 const AuthMenuActions = () => {
   const dispatch = useAppDispatch()
-  const handleClick = useCallback(() => {
-    dispatch(logout())
-  }, [dispatch])
-
+  const handleLogout = useCallback(() => dispatch(logout()), [dispatch])
   const navigate = useNavigate()
   return (
     <div className="flex flex-row justify-between w-full items-center gap-4 h-16 bg-white px-8">
@@ -55,7 +52,7 @@ const AuthMenuActions = () => {
         >
           Profilo
         </Button>
-        <Button className="w-fit" variant="ghost" onClick={handleClick}>
+        <Button className="w-fit" variant="ghost" onClick={handleLogout}>
           Logout
         </Button>
       </div>
@@ -64,7 +61,7 @@ const AuthMenuActions = () => {
 }
 
 const MenuActions = () => {
-  const { token } = useAppSelector((state) => state.auth)
+  const token = useAppSelector((state) => state.auth.token)
   if (token) return <AuthMenuActions />
   return <PublicMenuActions />
 }
