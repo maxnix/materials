@@ -1,7 +1,8 @@
-import { Config } from "tailwindcss/types"
+import { Config } from "tailwindcss"
+
 
 const config: Config = {
-  content: [`./index.html`, `./src/**/*.{js,ts,jsx,tsx}`],
+  content: ["./src/**/*.{js,ts,tsx,jsx}", "./index.html"],
   theme: {
     extend: {},
   },

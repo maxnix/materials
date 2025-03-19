@@ -1,5 +1,5 @@
-import { InizioConcettiAvanzati } from "./lezioni/react-advanced/Inizio"
+import { PropsObject } from "./lezioni/introduzione/inizio";
 
-const App = () => <InizioConcettiAvanzati />
+const App = () => <PropsObject />;
 
-export default App
+export default App;

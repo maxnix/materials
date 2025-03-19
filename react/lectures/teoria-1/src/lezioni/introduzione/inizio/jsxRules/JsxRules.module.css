@@ -1,0 +1,18 @@
+.cardClass {
+    width: fit-content;
+    height: 180px;
+    border: "1px solid #a1a1a1a";
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    color: white;
+
+    >img {
+        height: 100%;
+        border-radius: 8px;
+    }
+}

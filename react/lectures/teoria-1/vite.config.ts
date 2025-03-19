@@ -11,4 +11,11 @@ export default defineConfig({
       "@assets": `/src/assets`,
     },
   },
-})
+  server: {
+    watch: {
+      usePolling: true,
+      interval: 100, // Riduci l'intervallo per una reattività maggiore
+    },
+  },
+});
+
